@@ -39,7 +39,7 @@ def create_network(network_name,network_cidr):
         router_detail = neutron.create_router( { 'router' : { 'name' : network_name+'_router' } } )
         router = router_detail['router']
         neutron.add_interface_router(router['id'], { 'subnet_id' : subnet['id'] } )
-        neutron.add_gateway_router(router['id'], { 'network_id' : neutron.list_networks(name = EXTERNAL_NETWORK)['networks'][0]['id'] } )
+        # neutron.add_gateway_router(router['id'], { 'network_id' : neutron.list_networks(name = EXTERNAL_NETWORK)['networks'][0]['id'] } )
 
         print('   - Created Router %s' % router['name'])
 

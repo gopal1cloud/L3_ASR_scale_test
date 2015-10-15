@@ -22,7 +22,7 @@ def launch_vm_on_network(vm_name, network_id):
     This method is to launch VM on the given network & VM Name.
     """
 
-    image = nova.images.find(name="cirros")
+    image = nova.images.find(name="Cirros")
     flavor = nova.flavors.find(name="m1.tiny")
     instance = nova.servers.create(name=vm_name, image=image, flavor=flavor, key_name="admin", nics = [{'net-id': network_id}])
     # Poll at 25 second intervals, until the status is no longer 'BUILD'
@@ -34,5 +34,5 @@ def launch_vm_on_network(vm_name, network_id):
         instance = nova.servers.get(instance.id)
         status = instance.status
     print "   - Current status: %s" % status
-    add_floating_ip_for_vm(instance)
+    # add_floating_ip_for_vm(instance)
     return True
