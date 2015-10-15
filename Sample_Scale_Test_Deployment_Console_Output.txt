@@ -1,0 +1,94 @@
+[onecloud@localhost ]$ python initialize_deploy.py 
+
+
+
+==================================================
+    Configuration for this Scale Test
+==================================================
+ Network will be created with prefix                        : TEST
+ No of Networks                                             : 2
+ No of VMs per Network                                      : 2
+ Name of the External Network with be connected with Router : public
+ Name of the Floating IP Pool will be used for Allocation   : public
+==================================================
+
+
+
+Starting Scale Test Deployment
+
+
+
+==================================================
+   Initiated Network Creation for TEST_1
+==================================================
+
+
+
+   - Network TEST_1 created
+   - Created subnet TEST_1_subnet
+   - Created Router TEST_1_router
+
+
+
+<== Completed Network Creation with External Gateway Successfully ==>
+
+
+
+==================================================
+   Initiated VM Deployment TEST_1
+==================================================
+
+
+
+  * Instance created on network: TEST_1_VM_1
+   - Current status: ACTIVE
+   - Assigned Floating IP: 172.24.4.234
+  * Instance created on network: TEST_1_VM_2
+   - Current status: ACTIVE
+   - Assigned Floating IP: 172.24.4.237
+
+
+
+<== Completed VM Launch on Network with Floating IP Allocation Successfully ==>
+
+
+
+==================================================
+   Initiated Network Creation for TEST_2
+==================================================
+
+
+
+   - Network TEST_2 created
+   - Created subnet TEST_2_subnet
+   - Created Router TEST_2_router
+
+
+
+<== Completed Network Creation with External Gateway Successfully ==>
+
+
+
+==================================================
+   Initiated VM Deployment TEST_2
+==================================================
+
+
+
+  * Instance created on network: TEST_2_VM_1
+   - Current status: ACTIVE
+   - Assigned Floating IP: 172.24.4.226
+  * Instance created on network: TEST_2_VM_2
+   - Current status: ACTIVE
+   - Assigned Floating IP: 172.24.4.227
+
+
+
+<== Completed VM Launch on Network with Floating IP Allocation Successfully ==>
+==================================================
+
+
+
+Scale Test Deployment Completed
+
+
