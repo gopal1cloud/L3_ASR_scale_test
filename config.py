@@ -3,10 +3,10 @@ Description: Define the Scale Test Configuration with the below global parameter
 Developer: gopal@onecloudinc.com
 """
 
-NETWORK_NAME_PREFFIX = 'TEST'
+NETWORK_NAME_PREFFIX = 'scaletest2'
 NETWORK_COUNT = 2
 VM_COUNT = 1
-# EXTERNAL_NETWORK = 'public'
+EXTERNAL_NETWORK = 'public'
 # FLOATING_IP_POOL = 'public'
 
 

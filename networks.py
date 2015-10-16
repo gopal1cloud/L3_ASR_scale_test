@@ -13,7 +13,7 @@ from vm_instances import launch_vm_on_network
 credentials = get_credentials()
 neutron = client.Client(**credentials)
 
-def create_network(network_name,network_cidr):
+def create_network(router_id, network_name,network_cidr):
     """
     This method is used to create network, subnets, router with \
     external gateway mapping for the given network name and CIDR.
@@ -35,13 +35,7 @@ def create_network(network_name,network_cidr):
         subnet_detail = neutron.create_subnet(body=body_create_subnet)
         subnet = subnet_detail['subnets'][0] 
         print('   - Created subnet %s' % subnet['name'])
-        
-        router_detail = neutron.create_router( { 'router' : { 'name' : network_name+'_router' } } )
-        router = router_detail['router']
-        neutron.add_interface_router(router['id'], { 'subnet_id' : subnet['id'] } )
-        # neutron.add_gateway_router(router['id'], { 'network_id' : neutron.list_networks(name = EXTERNAL_NETWORK)['networks'][0]['id'] } )
-
-        print('   - Created Router %s' % router['name'])
+        neutron.add_interface_router(router_id, { 'subnet_id' : subnet['id'] } )
 
     finally:
         print "\n\n"
