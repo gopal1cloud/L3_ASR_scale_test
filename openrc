@@ -3,6 +3,6 @@
 #
 
 export OS_USERNAME=admin
-export OS_TENANT_NAME=admin
+export OS_TENANT_NAME=scaletest2
 export OS_PASSWORD=admin123
 export OS_AUTH_URL=http://10.1.25.134:5000/v2.0/

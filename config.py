@@ -5,7 +5,7 @@ Developer: gopal@onecloudinc.com
 
 NETWORK_NAME_PREFFIX = 'TEST'
 NETWORK_COUNT = 2
-VM_COUNT = 2
+VM_COUNT = 1
 # EXTERNAL_NETWORK = 'public'
 # FLOATING_IP_POOL = 'public'
 
