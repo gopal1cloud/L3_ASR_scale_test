@@ -18,7 +18,8 @@ neutron = client.Client(**credentials)
 def main():
     """
     This method will initialize the scale test deployment based on the global \
-    config parameters mentioned on config.py file
+    config parameters mentioned on config.py file and creates the router with \
+    external gateway connectivity to public network.
     """
 
     print "\n\n"
@@ -33,11 +34,12 @@ def main():
             name=EXTERNAL_NETWORK)['networks'][0]['id']})
 
     print('   - Created Router %s' % router['name'])
+
     for i in range(NETWORK_COUNT):
         i += 1
         network_name = NETWORK_NAME_PREFFIX+'_'+str(i)
         network_cidr = str(i)+"."+str(i)+"."+str(i)+".0/24"
-        create_network(router['id'], network_name, network_cidr)
+        create_network(router, network_name, network_cidr)
     print "="*50
     print "\n\n"
     print "Scale Test Deployment Completed"
