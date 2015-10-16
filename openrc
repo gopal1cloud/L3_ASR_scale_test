@@ -4,5 +4,5 @@
 
 export OS_USERNAME=admin
 export OS_TENANT_NAME=admin
-export OS_PASSWORD=onecloud
-export OS_AUTH_URL=http://172.168.2.50:5000/v2.0/
+export OS_PASSWORD=admin123
+export OS_AUTH_URL=http://10.1.25.134:5000/v2.0/
