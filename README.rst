@@ -17,8 +17,8 @@ Step :: 1
 
 export OS_USERNAME=admin
 export OS_TENANT_NAME=admin
-export OS_PASSWORD=onecloud
-export OS_AUTH_URL=http://172.168.2.50:5000/v2.0/
+export OS_PASSWORD=admin123
+export OS_AUTH_URL=http://10.1.25.134/v2.0/
 
 
 Step :: 2
@@ -50,11 +50,19 @@ Step :: 4
 
 This script will create Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
 
+Step :: 5
+---------
+
+==> Destroy the scale test deployment by running the 'destroy_deploy.py' python script.
+
+[onecloud@localhost ]$ python destroy_deploy.py
+
+This script will delete Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
 
 Thats It.
 
 
-I have given the same console output in a text file named 'Sample_Scale_Test_Deployment_Console_Output.txt' and
+I have given the same console output in a text file named 'Sample_Scale_Test_Deployment_Console_Output.txt', 'Sample_Destroy_Scale_Test_Deployment_Console_Output.txt' and
 sample openstack network topology named 'Scale_Test_Deployment_Per_Tenant_Screenshot.png' in the script folder for reference.
 
 Thanks!!!
