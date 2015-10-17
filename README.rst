@@ -50,6 +50,8 @@ Step :: 4
 
 This script will create Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
 
+![alt tag](https://raw.githubusercontent.com/gopal1cloud/L3_ASR_scale_test/l3_asr_develop/Scale_Test_Deployment_Per_Tenant_Screenshot.png)
+
 Step :: 5
 ---------
 
