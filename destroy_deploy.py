@@ -20,17 +20,17 @@ def main():
     external gateway connectivity to public network.
     """
 
-    print "\n\n"
+    print "\n"
     print_scale_test_config()
-    print "\n\n"
+    print "\n"
     print "Destroying Scale Test Deployment"
     
     delete_network()
     
     print "="*50
-    print "\n\n"
+    print "\n"
     print "Scale Test Deployment Completed"
-    print "\n\n"
+    print "\n"
 
 
 if __name__ == '__main__':

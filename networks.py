@@ -4,7 +4,7 @@ Description: This script is to create network, subnets, router with \
              external gateway mapping.
 Developer: gopal@onecloudinc.com
 """
-
+import os
 from neutronclient.v2_0 import client
 from credentials import get_credentials
 from config import NETWORK_NAME_PREFFIX, NETWORK_COUNT, VM_COUNT
@@ -22,47 +22,68 @@ def create_network(router, network_name, network_cidr):
     """
 
     try:
-        print "\n\n"
+        print "\n"
         print "="*50
         print "   Initiated Network Creation for "+network_name
         print "="*50
-        print "\n\n"
+        print "\n"
 
         body_sample = {'network': {'name': network_name,
                                    'admin_state_up': True}}
-        netw = neutron.create_network(body=body_sample)
-        net_dict = netw['network']
-        network_id = net_dict['id']
-        print('   - Network %s created' % net_dict['name'])
-        body_create_subnet = {'subnets': [{'name': network_name+"_subnet",
-                                           'cidr': network_cidr,
-                                           'ip_version': 4,
-                                           'network_id': network_id}]}
-        subnet_detail = neutron.create_subnet(body=body_create_subnet)
-        subnet = subnet_detail['subnets'][0]
-        print('   - Created subnet %s' % subnet['name'])
+        try:
+            netw = neutron.create_network(body=body_sample)
+            net_dict = netw['network']
+            network_id = net_dict['id']
+            print('   - Network %s created' % net_dict['name'])
+            net_status = True
+        except Exception:
+            net_dict = {}
+            net_status = False
+
+        subnet_name = network_name+"_subnet"
+        try:
+            body_create_subnet = {'subnets': [{'name': network_name+"_subnet",
+                                  'cidr': network_cidr,
+                                  'ip_version': 4,
+                                  'network_id': network_id}]}
+            subnet_detail = neutron.create_subnet(body=body_create_subnet)
+            subnet = subnet_detail['subnets'][0]
+            print('   - Created subnet %s' % subnet['name'])
+            net_status = True
+        except Exception:
+            subnet = {}
+            net_status = False
+
         neutron.add_interface_router(router['id'], {'subnet_id': subnet['id']})
         print('   - Created interface between %s' % subnet['name'])
 
     finally:
-        print "\n\n"
+        print "\n"
         msg = "<== Completed Network Creation with External Gateway "
         msg += "Successfully ==>"
         print msg
-    print "\n\n"
+    print "\n"
     print "="*50
     print "   Initiated VM Deployment "+network_name
     print "="*50
-    print "\n\n"
+    print "\n"
 
     for i in range(1, VM_COUNT+1):
         vm_name = net_dict['name']+'_VM_'+str(i)
-        launch_vm_on_network(vm_name, network_id)
-    print "\n\n"
+        ins_data = launch_vm_on_network(vm_name, network_id)
+
+    print "\n"
     msg = "<== Completed VM Launch on Network with Floating IP Allocation "
     msg += "Successfully ==>"
     print msg
-    return True
+  
+    result = {'network_data': {'tenant_name': os.environ['OS_TENANT_NAME'],
+                                   'network_name': network_name,
+                                   'network_cidr': network_cidr,
+                                   'subnet_name': subnet_name,
+                                   'status': net_status},
+              'instance_data': ins_data}
+    return result
 
 
 def delete_network():
@@ -77,23 +98,23 @@ def delete_network():
         i += 1
         network_list.append(NETWORK_NAME_PREFFIX+'_'+str(i))
     for network_name in network_list:
-        print "\n\n"
+        print "\n"
         print "="*50
         print "   Terminating VM launched on "+network_name
         print "="*50
-        print "\n\n"
+        print "\n"
         for i in range(1, VM_COUNT+1):
             vm_name = network_name+'_VM_'+str(i)
             terminate_vm_on_network(vm_name, network_name)
-        print "\n\n"
+        print "\n"
         print("<== Completed VM Termination on Network ==>")
     networks = neutron.list_networks()['networks']
     routers = neutron.list_routers()['routers']
-    print "\n\n"
+    print "\n"
     print "="*50
     print "   Initiated Network Deletion "
     print "="*50
-    print "\n\n"
+    print "\n"
     for router in routers:
         if router['name'] in router_list:
             tenant_id = router['tenant_id']
@@ -119,18 +140,18 @@ def delete_network():
                         neutron.delete_subnet(subnet['id'])
                     neutron.delete_network(network['id'])
                     print "   Deleted "+network['name']
-            print "\n\n"
+            print "\n"
             neutron.remove_gateway_router(router['id'])
             try:
                 neutron.delete_router(router['id'])
             except:
                 pass
             print "   Deleted "+router['name']
-    print "\n\n"
+    print "\n"
     msg = "<== Completed Network, Router Deletion from External Gateway "
     msg += "Successfully ==>"
     print msg
     # release_all_floating_ips()
-    print "\n\n"
+    print "\n"
     # print("<== Released all Floating IPs Successfully ==>")
     return True

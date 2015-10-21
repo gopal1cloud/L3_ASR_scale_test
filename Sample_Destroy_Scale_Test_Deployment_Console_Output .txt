@@ -1,43 +1,56 @@
 [onecloud@localhost ]$ python destroy_deploy.py  
 
-==================================================
+======================================================================
     Configuration for this Scale Test
-==================================================
- Network will be created with prefix                        : scaletest2
+======================================================================
+ Network will be created with prefix                        : scaletest1
  No of Networks                                             : 2
  No of VMs per Network                                      : 1
  Name of the External Network with be connected with Router : public
  Name of the Floating IP Pool will be used for Allocation   : public
-==================================================
+======================================================================
+
+
 
 Destroying Scale Test Deployment
 
+
 ==================================================
-   Terminating VM launched on scaletest2_1
+   Terminating VM launched on scaletest1_1
 ==================================================
 
-  * Instance terminated on network: scaletest2_1_VM_1
+
+  * Instance terminated on network: scaletest1_1_VM_1
+
 
 <== Completed VM Termination on Network ==>
 
+
 ==================================================
-   Terminating VM launched on scaletest2_2
+   Terminating VM launched on scaletest1_2
 ==================================================
 
-  * Instance terminated on network: scaletest2_2_VM_1
+
+  * Instance terminated on network: scaletest1_2_VM_1
+
 
 <== Completed VM Termination on Network ==>
+
 
 ==================================================
    Initiated Network Deletion 
 ==================================================
 
-   Deleted scaletest2_1
-   Deleted scaletest2_2
 
-   Deleted scaletest2_router
+   Deleted scaletest1_2
+   Deleted scaletest1_1
+
+
+   Deleted scaletest1_router
+
 
 <== Completed Network, Router Deletion from External Gateway Successfully ==>
+
 
 ==================================================
 

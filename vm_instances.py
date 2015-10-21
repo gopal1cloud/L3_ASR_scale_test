@@ -25,9 +25,18 @@ def launch_vm_on_network(vm_name, network_id):
 
     image = nova.images.find(name="Cirros")
     flavor = nova.flavors.find(name="m1.tiny")
-    instance = nova.servers.create(name=vm_name, image=image, flavor=flavor,
-                                   key_name="admin",
-                                   nics=[{'net-id': network_id}])
+
+    try:
+        instance = nova.servers.create(name=vm_name, image=image,
+                                       flavor=flavor,
+                                       key_name="admin",
+                                       nics=[{'net-id': network_id}])
+        ins_dict = instance['name']
+        ins_status = True
+    except Exception:
+        ins_dict = {}
+        ins_status = False
+
     # Poll at 25 second intervals, until the status is no longer 'BUILD'
     print "  * Instance created on network: " + str(vm_name)
     status = instance.status
@@ -38,7 +47,8 @@ def launch_vm_on_network(vm_name, network_id):
         status = instance.status
     print "   - Current status: %s" % status
     # add_floating_ip_for_vm(instance)
-    return True
+    ins_data = {'instance_name': vm_name, 'status': status}
+    return ins_data
 
 
 def terminate_vm_on_network(vm_name, network_name):

@@ -1,56 +1,105 @@
 [onecloud@localhost ]$ python initialize_deploy.py 
 
-==================================================
+======================================================================
     Configuration for this Scale Test
-==================================================
- Network will be created with prefix                        : scaletest2
+======================================================================
+ Network will be created with prefix                        : scaletest1
  No of Networks                                             : 2
  No of VMs per Network                                      : 1
  Name of the External Network with be connected with Router : public
  Name of the Floating IP Pool will be used for Allocation   : public
-==================================================
+======================================================================
+
 
 Starting Scale Test Deployment
-   - Created Router scaletest2_router
+   - Created Router scaletest1_router
+
 
 ==================================================
-   Initiated Network Creation for scaletest2_1
+   Initiated Network Creation for scaletest1_1
 ==================================================
 
-   - Network scaletest2_1 created
-   - Created subnet scaletest2_1_subnet
-   - Created interface between scaletest2_1_subnet
+
+   - Network scaletest1_1 created
+   - Created subnet scaletest1_1_subnet
+   - Created interface between scaletest1_1_subnet
+
 
 <== Completed Network Creation with External Gateway Successfully ==>
 
+
 ==================================================
-   Initiated VM Deployment scaletest2_1
+   Initiated VM Deployment scaletest1_1
 ==================================================
 
-  * Instance created on network: scaletest2_1_VM_1
+
+  * Instance created on network: scaletest1_1_VM_1
    - Current status: ACTIVE
+
 
 <== Completed VM Launch on Network with Floating IP Allocation Successfully ==>
 
+
 ==================================================
-   Initiated Network Creation for scaletest2_2
+   Initiated Network Creation for scaletest1_2
 ==================================================
 
-   - Network scaletest2_2 created
-   - Created subnet scaletest2_2_subnet
-   - Created interface between scaletest2_2_subnet
+
+   - Network scaletest1_2 created
+   - Created subnet scaletest1_2_subnet
+   - Created interface between scaletest1_2_subnet
+
 
 <== Completed Network Creation with External Gateway Successfully ==>
 
+
 ==================================================
-   Initiated VM Deployment scaletest2_2
+   Initiated VM Deployment scaletest1_2
 ==================================================
 
-  * Instance created on network: scaletest2_2_VM_1
+
+  * Instance created on network: scaletest1_2_VM_1
    - Current status: ACTIVE
+
 
 <== Completed VM Launch on Network with Floating IP Allocation Successfully ==>
 ==================================================
+
 
 Scale Test Deployment Completed
+
+
+********************************************************************************
+
+Scale Test Deployment Report
+
+********************************************************************************
+
+           Router Creation Results      
++-------------+-------------------+--------+
+| Tenant_name |    Router_name    | Status |
++-------------+-------------------+--------+
+| scaletest1  | scaletest1_router |  True  |
++-------------+-------------------+--------+
+
+
+                 Network Creation Results      
++-------------+--------------+--------------+---------------------+--------+
+| Tenant_name | Network_name | network_cidr |     Subnet_name     | Status |
++-------------+--------------+--------------+---------------------+--------+
+| scaletest1  | scaletest1_1 |  1.1.1.0/24  | scaletest1_1_subnet |  True  |
+| scaletest1  | scaletest1_2 |  2.2.2.0/24  | scaletest1_2_subnet |  True  |
++-------------+--------------+--------------+---------------------+--------+
+
+
+            Instance Creation Results      
++-------------+-------------------+--------+
+| Tenant_name |   Instance_name   | Status |
++-------------+-------------------+--------+
+| scaletest1  | scaletest1_1_VM_1 | ACTIVE |
+| scaletest1  | scaletest1_2_VM_1 | ACTIVE |
++-------------+-------------------+--------+
+
+
+********************************************************************************
 

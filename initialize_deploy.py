@@ -5,14 +5,49 @@ Description: This script is to initialize the L3/HA scale test deployment
 Developer: gopal@onecloudinc.com
 """
 
+import os
 from neutronclient.v2_0 import client
 from credentials import get_credentials
 from config import NETWORK_NAME_PREFFIX, NETWORK_COUNT, EXTERNAL_NETWORK, \
     print_scale_test_config
 from networks import create_network
+from prettytable import PrettyTable
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
+
+
+def print_router_info(router_name, status):
+    x = PrettyTable(['Tenant_name', 'Router_name', 'Status'])
+    x.align["Tenant_name"] = "l"   # Left align source tenant values
+    x.padding_width = 1
+    x.add_row([os.environ['OS_TENANT_NAME'], router_name, status])
+    return x
+
+
+def print_network_info(test_data):
+    y = PrettyTable(['Tenant_name', 'Network_name', 'network_cidr',
+                    'Subnet_name', 'Status'])
+    y.align["Tenant_name"] = "l"   # Left align source tenant values
+    y.padding_width = 1
+    for entry in test_data:
+        y.add_row([entry['network_data']['tenant_name'],
+                  entry['network_data']['network_name'],
+                  entry['network_data']['network_cidr'],
+                  entry['network_data']['subnet_name'],
+                  entry['network_data']['status']])
+    return y
+
+
+def print_instance_info(test_data):
+    z = PrettyTable(['Tenant_name', 'Instance_name', 'Status'])
+    z.align["Tenant_name"] = "l"   # Left align source tenant values
+    z.padding_width = 1
+    for data in test_data:
+        z.add_row([data['network_data']['tenant_name'],
+                  data['instance_data']['instance_name'],
+                  data['instance_data']['status']])
+    return z
 
 
 def main():
@@ -22,29 +57,56 @@ def main():
     external gateway connectivity to public network.
     """
 
-    print "\n\n"
+    print "\n"
     print_scale_test_config()
-    print "\n\n"
+    print "\n"
     print "Starting Scale Test Deployment"
-    router_detail = neutron.create_router({'router': {
-        'name': NETWORK_NAME_PREFFIX+'_router'}})
-    router = router_detail['router']
+    router_name = NETWORK_NAME_PREFFIX+'_router'
+    try:
+        router_detail = neutron.create_router({'router': {
+            'name': NETWORK_NAME_PREFFIX+'_router'}})
+        router = router_detail['router']
+        status = True
+    except Exception:
+        router = {}
+        status = False
+
     neutron.add_gateway_router(router['id'], {
         'network_id': neutron.list_networks(
-            name=EXTERNAL_NETWORK)['networks'][0]['id']})
+             name=EXTERNAL_NETWORK)['networks'][0]['id']})
 
     print('   - Created Router %s' % router['name'])
 
+    test_data = []
     for i in range(NETWORK_COUNT):
         i += 1
         network_name = NETWORK_NAME_PREFFIX+'_'+str(i)
         network_cidr = str(i)+"."+str(i)+"."+str(i)+".0/24"
-        create_network(router, network_name, network_cidr)
+        test_data.append(create_network(router, network_name, network_cidr))
     print "="*50
-    print "\n\n"
+    print "\n"
     print "Scale Test Deployment Completed"
-    print "\n\n"
+    print "\n"
 
+    print "*"*80
+    print "\n"
+    print "Scale Test Deployment Report"
+    print "\n"
+    print "*"*80
+
+    print "\n"
+    print "           Router Creation Results      "
+    print print_router_info(router_name, status)
+    print "\n"
+
+    print "                 Network Creation Results      "
+    print print_network_info(test_data)
+    print "\n"
+
+    print "            Instance Creation Results      "
+    print print_instance_info(test_data)
+    print "\n"
+    print '*'*80
 
 if __name__ == '__main__':
     main()
