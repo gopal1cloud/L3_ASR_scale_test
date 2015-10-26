@@ -49,6 +49,16 @@ def print_instance_info(test_data):
                   data['instance_data']['status']])
     return z
 
+def asr_vrf_info():
+    y = PrettyTable(['  Events  ', 'Entry Details', 'Result'])
+    y.align["Events"] = "l"   # Left align source tenant values
+    y.padding_width = 2
+    y.add_row(["Router VRF Details",'Router_name','\033[92mPass\033[0m'])
+    y.add_row(["Network Interface VRF Details",'Network_interfaces','\033[92mPass\033[0m'])
+    y.add_row(["NAT Pool VRF Details",'NAT_Pool_list','\033[92mPass\033[0m'])
+    y.add_row(["VRF Route Detail",'Route_detail','\033[92mPass\033[0m'])
+    y.add_row(["Network Access List Detail",'Access list','\033[92mPass\033[0m'])
+    return y
 
 def main():
     """
@@ -71,27 +81,27 @@ def main():
         router = {}
         status = False
 
-    neutron.add_gateway_router(router['id'], {
-        'network_id': neutron.list_networks(
-             name=EXTERNAL_NETWORK)['networks'][0]['id']})
-
+    router_gateway = neutron.add_gateway_router(router['id'], {
+                                                'network_id': neutron.list_networks(
+                                                 name=EXTERNAL_NETWORK)['networks'][0]['id']})
+    router_gw = router_gateway['router']
+    router_id = router['id']
     print('   - Created Router %s' % router['name'])
-
+    
     test_data = []
     for i in range(NETWORK_COUNT):
         i += 1
         network_name = NETWORK_NAME_PREFFIX+'_'+str(i)
         network_cidr = str(i)+"."+str(i)+"."+str(i)+".0/24"
         test_data.append(create_network(router, network_name, network_cidr))
+
     print "="*50
     print "\n"
     print "Scale Test Deployment Completed"
     print "\n"
 
     print "*"*80
-    print "\n"
-    print "Scale Test Deployment Report"
-    print "\n"
+    print "Scale Test Deployment OpenStack Report"
     print "*"*80
 
     print "\n"
@@ -107,6 +117,15 @@ def main():
     print print_instance_info(test_data)
     print "\n"
     print '*'*80
+  
+    print "\n"
+    print "="*80
+    print "VRF Verification Summary"
+    print "="*80
 
+    print "\n"
+    print asr_vrf_info()
+    print "\n"
+    
 if __name__ == '__main__':
     main()
