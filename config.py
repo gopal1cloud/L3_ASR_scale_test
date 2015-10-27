@@ -1,21 +1,24 @@
 """
-Description: Define the Scale Test Configuration with the below global parameters.
+Description: Define the Scale Test Configuration with the below global \
+             parameters.
 Developer: gopal@onecloudinc.com
 """
 
-NETWORK_NAME_PREFFIX = 'scaletest1'
+OS_USERNAME = 'admin'
+OS_TENANT_NAME = 'scaletest1'
+OS_PASSWORD = 'admin123'
+OS_AUTH_URL = 'http://10.1.25.134:5000/v2.0/'
+NETWORK_NAME_PREFFIX = OS_TENANT_NAME
 NETWORK_COUNT = 2
 VM_COUNT = 1
 EXTERNAL_NETWORK = 'public'
 FLOATING_IP_POOL = 'public'
-
-
-
-
+DEPLOYMENT_ID = 'ans134'
 
 """
 Test Configuration Ends Here with the global parameters.
 """
+
 
 def print_scale_test_config():
     """
@@ -26,9 +29,14 @@ def print_scale_test_config():
     print "    Configuration for this Scale Test"
     print '='*70
 
-    print " Network will be created with prefix                        : "+NETWORK_NAME_PREFFIX
-    print " No of Networks                                             : "+str(NETWORK_COUNT)
-    print " No of VMs per Network                                      : "+str(VM_COUNT)
-    print " Name of the External Network with be connected with Router : "+EXTERNAL_NETWORK
-    print " Name of the Floating IP Pool will be used for Allocation   : "+FLOATING_IP_POOL
+    print " Network will be created with prefix                        : " \
+        + NETWORK_NAME_PREFFIX
+    print " No of Networks                                             : " \
+        + str(NETWORK_COUNT)
+    print " No of VMs per Network                                      : " \
+        + str(VM_COUNT)
+    print " Name of the External Network with be connected with Router : " \
+        + EXTERNAL_NETWORK
+    print " Name of the Floating IP Pool will be used for Allocation   : " \
+        + FLOATING_IP_POOL
     print '='*70

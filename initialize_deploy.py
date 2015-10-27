@@ -5,11 +5,10 @@ Description: This script is to initialize the L3/HA scale test deployment
 Developer: gopal@onecloudinc.com
 """
 
-import os
 from neutronclient.v2_0 import client
 from credentials import get_credentials
-from config import NETWORK_NAME_PREFFIX, NETWORK_COUNT, EXTERNAL_NETWORK, \
-    print_scale_test_config
+from config import OS_TENANT_NAME, NETWORK_NAME_PREFFIX, NETWORK_COUNT, \
+    EXTERNAL_NETWORK, print_scale_test_config
 from networks import create_network
 from prettytable import PrettyTable
 
@@ -21,7 +20,7 @@ def print_router_info(router_name, status):
     x = PrettyTable(['Tenant_name', 'Router_name', 'Status'])
     x.align["Tenant_name"] = "l"   # Left align source tenant values
     x.padding_width = 1
-    x.add_row([os.environ['OS_TENANT_NAME'], router_name, status])
+    x.add_row([OS_TENANT_NAME, router_name, status])
     return x
 
 
@@ -49,16 +48,20 @@ def print_instance_info(test_data):
                   data['instance_data']['status']])
     return z
 
+
 def asr_vrf_info():
     y = PrettyTable(['  Events  ', 'Entry Details', 'Result'])
     y.align["Events"] = "l"   # Left align source tenant values
     y.padding_width = 2
-    y.add_row(["Router VRF Details",'Router_name','\033[92mPass\033[0m'])
-    y.add_row(["Network Interface VRF Details",'Network_interfaces','\033[92mPass\033[0m'])
-    y.add_row(["NAT Pool VRF Details",'NAT_Pool_list','\033[92mPass\033[0m'])
-    y.add_row(["VRF Route Detail",'Route_detail','\033[92mPass\033[0m'])
-    y.add_row(["Network Access List Detail",'Access list','\033[92mPass\033[0m'])
+    y.add_row(["Router VRF Details", 'Router_name', '\033[92mPass\033[0m'])
+    y.add_row(["Network Interface VRF Details", 'Network_interfaces',
+              '\033[92mPass\033[0m'])
+    y.add_row(["NAT Pool VRF Details", 'NAT_Pool_list', '\033[92mPass\033[0m'])
+    y.add_row(["VRF Route Detail", 'Route_detail', '\033[92mPass\033[0m'])
+    y.add_row(["Network Access List Detail", 'Access list',
+               '\033[92mPass\033[0m'])
     return y
+
 
 def main():
     """
@@ -116,16 +119,13 @@ def main():
     print "            Instance Creation Results      "
     print print_instance_info(test_data)
     print "\n"
-    print '*'*80
-  
-    print "\n"
-    print "="*80
+
     print "VRF Verification Summary"
-    print "="*80
 
     print "\n"
     print asr_vrf_info()
     print "\n"
+    print '*'*80
     
 if __name__ == '__main__':
     main()

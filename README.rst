@@ -13,19 +13,12 @@ Stepts to run the scale test deployment:
 Step :: 1
 ---------
 
-==> Add the Keystone Credentials in 'openrc' file.
-
-export OS_USERNAME=admin
-export OS_TENANT_NAME=admin
-export OS_PASSWORD=admin123
-export OS_AUTH_URL=http://10.1.25.134/v2.0/
-
-
-Step :: 2
----------
-
 ==> Define the Scale Test Configuration for the global parameters in 'config.py' file.
 
+OS_USERNAME=admin
+OS_TENANT_NAME=admin
+OS_PASSWORD=admin123
+OS_AUTH_URL=http://10.1.25.134/v2.0/
 NETWORK_NAME_PREFFIX = 'TEST'
 NETWORK_COUNT = 2
 VM_COUNT = 2
@@ -33,15 +26,7 @@ EXTERNAL_NETWORK = 'public'
 FLOATING_IP_POOL = 'public'
 
 
-Step :: 3
----------
-
-==> Load the Environment variables into your current shell with the Bash source built-in command.
-
-[onecloud@localhost ]$ source openrc 
-
-
-Step :: 4
+Step :: 2
 ---------
 
 ==> Intialize the scale test deployment by running the 'initialize_deploy.py' python script.
@@ -53,7 +38,7 @@ This script will create Networks, Subnets, Router with External Gateway, VMS, Fl
 .. image:: https://raw.githubusercontent.com/gopal1cloud/L3_ASR_scale_test/l3_asr_develop/Scale_Test_Deployment_Per_Tenant_Screenshot.png
    :alt: Scale Test Topology
 
-Step :: 5
+Step :: 3
 ---------
 
 ==> Destroy the scale test deployment by running the 'destroy_deploy.py' python script.

@@ -4,10 +4,11 @@ Description: This script is to create network, subnets, router with \
              external gateway mapping.
 Developer: gopal@onecloudinc.com
 """
-import os
+
 from neutronclient.v2_0 import client
 from credentials import get_credentials
-from config import NETWORK_NAME_PREFFIX, NETWORK_COUNT, VM_COUNT
+from config import NETWORK_NAME_PREFFIX, NETWORK_COUNT, VM_COUNT, \
+    OS_TENANT_NAME
 from vm_instances import launch_vm_on_network, terminate_vm_on_network
 from floating_ips import release_all_floating_ips
 
@@ -77,10 +78,11 @@ def create_network(router, network_name, network_cidr):
     msg += "Successfully ==>"
     print msg
   
-    result = {'network_data': {'tenant_name': os.environ['OS_TENANT_NAME'],
+    result = {'network_data': {'tenant_name': OS_TENANT_NAME,
                                    'network_name': network_name,
                                    'network_cidr': network_cidr,
                                    'subnet_name': subnet_name,
+                                   'network_id': network_id,
                                    'status': net_status},
               'instance_data': ins_data}
     return result
