@@ -8,7 +8,7 @@ Developer: gopal@onecloudinc.com
 from neutronclient.v2_0 import client
 from credentials import get_credentials
 from config import OS_TENANT_NAME, NETWORK_NAME_PREFFIX, NETWORK_COUNT, \
-    EXTERNAL_NETWORK, print_scale_test_config
+    EXTERNAL_NETWORK, print_scale_test_config, DEPLOYMENT_ID
 from networks import create_network
 from prettytable import PrettyTable
 
@@ -90,13 +90,16 @@ def main():
     router_gw = router_gateway['router']
     router_id = router['id']
     print('   - Created Router %s' % router['name'])
-    
+
     test_data = []
     for i in range(NETWORK_COUNT):
         i += 1
         network_name = NETWORK_NAME_PREFFIX+'_'+str(i)
         network_cidr = str(i)+"."+str(i)+"."+str(i)+".0/24"
         test_data.append(create_network(router, network_name, network_cidr))
+
+    vrf_router_id = router_id[:6]
+    vrf_name = "nrouter"+'-'+vrf_router_id+'-'+DEPLOYMENT_ID
 
     print "="*50
     print "\n"
@@ -120,9 +123,9 @@ def main():
     print print_instance_info(test_data)
     print "\n"
 
-    print "VRF Verification Summary"
-
-    print "\n"
+    print "     ** VRF Verification Summary **         "
+    print " \n"
+    print " VRF Name : " + vrf_name
     print asr_vrf_info()
     print "\n"
     print '*'*80
