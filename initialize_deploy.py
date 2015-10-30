@@ -28,13 +28,14 @@ def print_router_info(router_name, status):
 
 def print_network_info(test_data):
     y = PrettyTable(['Tenant Name', 'Network Name', 'Network CIDR',
-                    'Subnet Name', 'Status'])
+                    'Vlan ID', 'Subnet Name', 'Status'])
     y.align["Tenant_Name"] = "l"   # Left align source tenant values
     y.padding_width = 1
     for entry in test_data:
         y.add_row([entry['network_data']['tenant_name'],
                   entry['network_data']['network_name'],
                   entry['network_data']['network_cidr'],
+                  entry['network_data']['network_vlan_id'],
                   entry['network_data']['subnet_name'],
                   entry['network_data']['status']])
     return y
@@ -59,17 +60,51 @@ def asr_router_vrf_info(router_name, router_data):
     x.add_row([OS_TENANT_NAME, router_name, router_data['vrfname'], ', '.join(router_data['interfaces']), router_data['status']])
     return x
 
+def asr_ipnat_pool_info(router_name, ipnatpool_data):
+    x = PrettyTable(['Tenant Name', 'Router Name', 'Router VRF Name',
+                    'NAT Pool Name', 'Start IP', 'End IP', 'Netmask', 'Status'])
+    x.align["Tenant Name"] = "l"   # Left align source tenant values
+    x.padding_width = 2
+    x.add_row([OS_TENANT_NAME, router_name, ipnatpool_data['vrfname'], 
+              ipnatpool_data['nat_pool_name'], ipnatpool_data['start_ip'], 
+              ipnatpool_data['end_ip'], ipnatpool_data['netmask'], 
+              ipnatpool_data['status']])
+    return x
 
-def asr_network_vrf_info(router_name, interface_data):
-    y = PrettyTable(['Tenant Name', 'Router Name', 'Interface VRF Name',
-                    'Interface VRF Description',
-                    'Internet Address', 'Vlan ID', 'Interfaces Status', 'Status'])
+def asr_iproute_info(router_name, iproute_data):
+    x = PrettyTable(['Tenant Name', 'Router Name', 'Router VRF Name',
+                    'Prefix', 'Mask', 'Interface', 'Next Hop Address', 'Status'])
+    x.align["Tenant Name"] = "l"   # Left align source tenant values
+    x.padding_width = 2
+    x.add_row([OS_TENANT_NAME, router_name, iproute_data['vrfname'],
+              iproute_data['prefix'], iproute_data['mask'],
+              iproute_data['interface'],
+              iproute_data['next_hop_address'], iproute_data['status']])
+    return x
+
+def asr_network_vrf_info(router_name, network_vlan, interface_data):
+    y = PrettyTable(['Tenant Name', 'Router Name', 'Network Name',
+                    'Interface VRF Name', 'Internet Address', 
+                    'Vlan ID', 'Interfaces Status', 'Status'])
     y.align["Tenant Name"] = "l"   # Left align source tenant values
     y.padding_width = 2
     for entry in interface_data:
-        y.add_row([OS_TENANT_NAME, router_name, entry['interface_name'],
-                  entry['description'], entry['ip_address'],
-                  entry['vlan_id'], entry['interface_status'], entry['status']])
+        y.add_row([OS_TENANT_NAME, router_name, network_vlan[entry['vlan_id']], 
+                  entry['interface_name'], entry['ip_address'], 
+                  entry['vlan_id'], entry['interface_status'], 
+                  entry['status']])
+    return y
+
+def asr_interface_nat_info(router_name, network_vlan, interface_data):
+    y = PrettyTable(['Tenant Name', 'Router Name', 'Network Name', 
+                    'Interface Vlan ID', 'Dynamic NAT Entry', 
+                    'Access-list Entry', 'Status'])
+    y.align["Tenant Name"] = "l"   # Left align source tenant values
+    y.padding_width = 2
+    for entry in interface_data:
+        y.add_row([OS_TENANT_NAME, router_name, network_vlan[entry['vlan_id']],
+                  entry['vlan_id'], entry['nat_entry'],
+                  entry['access_list_entry'], entry['status']])
     return y
 
 
@@ -107,6 +142,10 @@ def main():
         network_name = NETWORK_NAME_PREFFIX+'_'+str(i)
         network_cidr = str(i)+"."+str(i)+"."+str(i)+".0/24"
         test_data.append(create_network(router, network_name, network_cidr))
+    
+    network_vlan = {}
+    for entry in test_data:
+        network_vlan[str(entry['network_data']['network_vlan_id'])] = entry['network_data']['network_name'] 
 
     vrf_router_id = router_id[:6]
     vrfname = "nrouter"+'-'+vrf_router_id+'-'+DEPLOYMENT_ID
@@ -118,10 +157,17 @@ def main():
                                      asr_slots=["0"])
 
     router_data = asr_verify_cmd.get_router_detail(vrfname)
+    ipnatpool_data = asr_verify_cmd.get_ipnat_pool_detail(vrfname)
+    iproute_data = asr_verify_cmd.get_iproute_detail(vrfname)
+
     interface_data = []
     for interface in router_data['interfaces']:
         interface_data.append(asr_verify_cmd.get_network_interface_detail(vrfname, interface))
-
+    nat_data = []
+    for interface in interface_data:
+        interfaceid = DEPLOYMENT_ID+'_'+interface['vlan_id']
+        nat_data.append(asr_verify_cmd.get_interface_nat_access_detail(interface['vlan_id'], interfaceid))
+    
     print "="*50
     print "\n"
     print "Scale Test Deployment Completed"
@@ -148,8 +194,20 @@ def main():
     print asr_router_vrf_info(router_name, router_data)
     print "\n"
 
+    print "           OpenStack-ASR IP NAT Pool Verification Results               "
+    print asr_ipnat_pool_info(router_name, ipnatpool_data)
+    print "\n"
+
+    print "           OpenStack-ASR IP Route Verification Results               "
+    print asr_iproute_info(router_name, iproute_data)
+    print "\n"
+
     print "           OpenStack-ASR Network VRF Verification Results              "
-    print asr_network_vrf_info(router_name, interface_data)
+    print asr_network_vrf_info(router_name, network_vlan, interface_data)
+    print "\n"
+
+    print "           OpenStack-ASR Network Interface's Dynamic NAT & Access list Entry Verification Results              "
+    print asr_interface_nat_info(router_name, network_vlan, nat_data)
     print "\n"
 
 

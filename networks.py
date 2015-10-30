@@ -32,9 +32,10 @@ def create_network(router, network_name, network_cidr):
         body_sample = {'network': {'name': network_name,
                                    'admin_state_up': True}}
         try:
-            netw = neutron.create_network(body=body_sample)
-            net_dict = netw['network']
+            net = neutron.create_network(body=body_sample)
+            net_dict = net['network']
             network_id = net_dict['id']
+            network_vlan = net_dict['provider:segmentation_id']
             print('   - Network %s created' % net_dict['name'])
             net_status = True
         except Exception:
@@ -83,6 +84,7 @@ def create_network(router, network_name, network_cidr):
                                    'network_cidr': network_cidr,
                                    'subnet_name': subnet_name,
                                    'network_id': network_id,
+                                   'network_vlan_id': network_vlan,
                                    'status': net_status},
               'instance_data': ins_data}
     return result
