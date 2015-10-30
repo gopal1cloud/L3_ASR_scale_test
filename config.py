@@ -7,13 +7,19 @@ Developer: gopal@onecloudinc.com
 OS_USERNAME = 'admin'
 OS_TENANT_NAME = 'scaletest1'
 OS_PASSWORD = 'admin123'
-OS_AUTH_URL = 'http://10.1.25.134:5000/v2.0/'
+OS_AUTH_URL = 'http://10.1.25.136:5000/v2.0/'
 NETWORK_NAME_PREFFIX = OS_TENANT_NAME
 NETWORK_COUNT = 2
 VM_COUNT = 1
 EXTERNAL_NETWORK = 'public'
 FLOATING_IP_POOL = 'public'
-DEPLOYMENT_ID = 'ans134'
+DEPLOYMENT_ID = 'ans136'
+ASR_HOST = '10.10.10.10'
+ASR_USER = 'admin'
+ASR_PASSWORD = 'admin'
+
+
+
 
 """
 Test Configuration Ends Here with the global parameters.

@@ -1,4 +1,5 @@
-[onecloud@localhost ]$ python initialize_deploy.py 
+[onecloud@localhost ]$ python initialize_deploy.py
+
 
 ======================================================================
     Configuration for this Scale Test
@@ -70,14 +71,13 @@ Scale Test Deployment Completed
 
 
 ********************************************************************************
-
-Scale Test Deployment Report
-
+Scale Test Deployment OpenStack Report
 ********************************************************************************
+
 
            Router Creation Results      
 +-------------+-------------------+--------+
-| Tenant_name |    Router_name    | Status |
+| Tenant Name |    Router Name    | Status |
 +-------------+-------------------+--------+
 | scaletest1  | scaletest1_router |  True  |
 +-------------+-------------------+--------+
@@ -85,21 +85,36 @@ Scale Test Deployment Report
 
                  Network Creation Results      
 +-------------+--------------+--------------+---------------------+--------+
-| Tenant_name | Network_name | network_cidr |     Subnet_name     | Status |
+| Tenant Name | Network Name | Network CIDR |     Subnet Name     | Status |
 +-------------+--------------+--------------+---------------------+--------+
-| scaletest1  | scaletest1_1 |  1.1.1.0/24  | scaletest1_1_subnet |  True  |
-| scaletest1  | scaletest1_2 |  2.2.2.0/24  | scaletest1_2_subnet |  True  |
+|  scaletest1 | scaletest1_1 |  1.1.1.0/24  | scaletest1_1_subnet |  True  |
+|  scaletest1 | scaletest1_2 |  2.2.2.0/24  | scaletest1_2_subnet |  True  |
 +-------------+--------------+--------------+---------------------+--------+
 
 
             Instance Creation Results      
 +-------------+-------------------+--------+
-| Tenant_name |   Instance_name   | Status |
+| Tenant Name |   Instance Name   | Status |
 +-------------+-------------------+--------+
 | scaletest1  | scaletest1_1_VM_1 | ACTIVE |
 | scaletest1  | scaletest1_2_VM_1 | ACTIVE |
 +-------------+-------------------+--------+
 
 
-********************************************************************************
+           OpenStack-ASR Router VRF Verification Results               
++---------------+---------------------+-------------------------+----------------------+----------+
+|  Tenant Name  |     Router Name     |     Router VRF Name     |      Interfaces      |  Status  |
++---------------+---------------------+-------------------------+----------------------+----------+
+|  scaletest1   |  scaletest1_router  |  nrouter-ddbb91-ans136  |  Po10.649, Po10.650  |   Pass   |
++---------------+---------------------+-------------------------+----------------------+----------+
+ 
+
+           OpenStack-ASR Network VRF Verification Results              
++---------------+---------------------+----------------------+---------------------------------+--------------------+-----------+--------------------------------------------------+----------+
+|  Tenant Name  |     Router Name     |  Interface VRF Name  |    Interface VRF Description    |  Internet Address  |  Vlan ID  |                Interfaces Status                 |  Status  |
++---------------+---------------------+----------------------+---------------------------------+--------------------+-----------+--------------------------------------------------+----------+
+|  scaletest1   |  scaletest1_router  |       Po10.649       |  OPENSTACK_NEUTRON-ans136_INTF  |     1.1.1.2/24     |    649    |  Port-channel10.649 is up, line protocol is up   |   Pass   |
+|  scaletest1   |  scaletest1_router  |       Po10.650       |  OPENSTACK_NEUTRON-ans136_INTF  |     2.2.2.2/24     |    650    |  Port-channel10.650 is up, line protocol is up   |   Pass   |
++---------------+---------------------+----------------------+---------------------------------+--------------------+-----------+--------------------------------------------------+----------+
+
 

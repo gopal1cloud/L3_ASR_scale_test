@@ -8,26 +8,28 @@ Developer: gopal@onecloudinc.com
 from neutronclient.v2_0 import client
 from credentials import get_credentials
 from config import OS_TENANT_NAME, NETWORK_NAME_PREFFIX, NETWORK_COUNT, \
-    EXTERNAL_NETWORK, print_scale_test_config, DEPLOYMENT_ID
+    EXTERNAL_NETWORK, print_scale_test_config, DEPLOYMENT_ID, \
+    ASR_HOST, ASR_USER, ASR_PASSWORD
 from networks import create_network
 from prettytable import PrettyTable
+from asr import GetASRCmd
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
 
 
 def print_router_info(router_name, status):
-    x = PrettyTable(['Tenant_name', 'Router_name', 'Status'])
-    x.align["Tenant_name"] = "l"   # Left align source tenant values
+    x = PrettyTable(['Tenant Name', 'Router Name', 'Status'])
+    x.align["Tenant Name"] = "l"   # Left align source tenant values
     x.padding_width = 1
     x.add_row([OS_TENANT_NAME, router_name, status])
     return x
 
 
 def print_network_info(test_data):
-    y = PrettyTable(['Tenant_name', 'Network_name', 'network_cidr',
-                    'Subnet_name', 'Status'])
-    y.align["Tenant_name"] = "l"   # Left align source tenant values
+    y = PrettyTable(['Tenant Name', 'Network Name', 'Network CIDR',
+                    'Subnet Name', 'Status'])
+    y.align["Tenant_Name"] = "l"   # Left align source tenant values
     y.padding_width = 1
     for entry in test_data:
         y.add_row([entry['network_data']['tenant_name'],
@@ -39,8 +41,8 @@ def print_network_info(test_data):
 
 
 def print_instance_info(test_data):
-    z = PrettyTable(['Tenant_name', 'Instance_name', 'Status'])
-    z.align["Tenant_name"] = "l"   # Left align source tenant values
+    z = PrettyTable(['Tenant Name', 'Instance Name', 'Status'])
+    z.align["Tenant Name"] = "l"   # Left align source tenant values
     z.padding_width = 1
     for data in test_data:
         z.add_row([data['network_data']['tenant_name'],
@@ -49,17 +51,25 @@ def print_instance_info(test_data):
     return z
 
 
-def asr_vrf_info(router_name, vrf_name):
-    y = PrettyTable([' Tenant_Name ', ' Router_Name', ' Neutron Events ', 'VRF_Entry', 'Details', 'Result'])
-    y.align["Tenant_Name"] = "l"   # Left align source tenant values
+def asr_router_vrf_info(router_name, router_data):
+    x = PrettyTable(['Tenant Name', 'Router Name', 'Router VRF Name',
+                    'Interfaces', 'Status'])
+    x.align["Tenant Name"] = "l"   # Left align source tenant values
+    x.padding_width = 2
+    x.add_row([OS_TENANT_NAME, router_name, router_data['vrfname'], ', '.join(router_data['interfaces']), router_data['status']])
+    return x
+
+
+def asr_network_vrf_info(router_name, interface_data):
+    y = PrettyTable(['Tenant Name', 'Router Name', 'Interface VRF Name',
+                    'Interface VRF Description',
+                    'Internet Address', 'Vlan ID', 'Interfaces Status', 'Status'])
+    y.align["Tenant Name"] = "l"   # Left align source tenant values
     y.padding_width = 2
-    y.add_row([OS_TENANT_NAME, router_name, "Router VRF Details", vrf_name, 'Protocols - ipv4, ipv6', '\033[92mPass\033[0m'])
-    y.add_row([OS_TENANT_NAME,  router_name, "Network Interface VRF Details", 'nrouter-ans134-INTF', 'Po-126, Po-127',
-              '\033[92mPass\033[0m'])
-    y.add_row([OS_TENANT_NAME,  router_name, "NAT Pool VRF Details", 'NAT_Pool_list', 'neutron-acl-637', '\033[92mPass\033[0m'])
-    y.add_row([OS_TENANT_NAME, router_name, "VRF Router Detail", 'Router_detail', 'router-id', '\033[92mPass\033[0m'])
-    y.add_row([OS_TENANT_NAME, router_name, "Network Access List Detail", 'Access list', 'acl-637,acl-638',
-               '\033[92mPass\033[0m'])
+    for entry in interface_data:
+        y.add_row([OS_TENANT_NAME, router_name, entry['interface_name'],
+                  entry['description'], entry['ip_address'],
+                  entry['vlan_id'], entry['interface_status'], entry['status']])
     return y
 
 
@@ -99,7 +109,18 @@ def main():
         test_data.append(create_network(router, network_name, network_cidr))
 
     vrf_router_id = router_id[:6]
-    vrf_name = "nrouter"+'-'+vrf_router_id+'-'+DEPLOYMENT_ID
+    vrfname = "nrouter"+'-'+vrf_router_id+'-'+DEPLOYMENT_ID
+
+    asr_verify_cmd = GetASRCmd(asr_host=ASR_HOST,
+                                     asr_host_port=22,
+                                     asr_user=ASR_USER,
+                                     asr_password=ASR_PASSWORD,
+                                     asr_slots=["0"])
+
+    router_data = asr_verify_cmd.get_router_detail(vrfname)
+    interface_data = []
+    for interface in router_data['interfaces']:
+        interface_data.append(asr_verify_cmd.get_network_interface_detail(vrfname, interface))
 
     print "="*50
     print "\n"
@@ -123,12 +144,14 @@ def main():
     print print_instance_info(test_data)
     print "\n"
 
-    print "     ** VRF Verification Summary **         "
-    print " \n"
-    print " VRF Name : " + vrf_name
-    print asr_vrf_info(router_name, vrf_name)
+    print "           OpenStack-ASR Router VRF Verification Results               "
+    print asr_router_vrf_info(router_name, router_data)
     print "\n"
-    print '*'*80
+
+    print "           OpenStack-ASR Network VRF Verification Results              "
+    print asr_network_vrf_info(router_name, interface_data)
+    print "\n"
+
 
 if __name__ == '__main__':
     main()
