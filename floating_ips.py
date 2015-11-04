@@ -7,11 +7,12 @@ Developer: gopal@onecloudinc.com
 import os
 from neutronclient.v2_0 import client
 import novaclient.v1_1.client as nvclient
-from credentials import get_nova_credentials
+from credentials import get_credentials, get_nova_credentials
 from config import FLOATING_IP_POOL
 
+neutron_credentials = get_credentials()
 credentials = get_nova_credentials()
-neutron = client.Client(**credentials)
+neutron = client.Client(**neutron_credentials)
 nova = nvclient.Client(**credentials)
 if not nova.keypairs.findall(name="admin"):
     with open(os.path.expanduser('~/.ssh/id_rsa.pub')) as fpubkey:

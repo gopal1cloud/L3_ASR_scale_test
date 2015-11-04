@@ -46,7 +46,7 @@ def launch_vm_on_network(vm_name, network_id):
         instance = nova.servers.get(instance.id)
         status = instance.status
     print "   - Current status: %s" % status
-    # add_floating_ip_for_vm(instance)
+    add_floating_ip_for_vm(instance)
     ins_data = {'instance_name': vm_name, 'status': status}
     return ins_data
 

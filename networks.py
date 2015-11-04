@@ -155,7 +155,7 @@ def delete_network():
     msg = "<== Completed Network, Router Deletion from External Gateway "
     msg += "Successfully ==>"
     print msg
-    # release_all_floating_ips()
+    release_all_floating_ips()
     print "\n"
-    # print("<== Released all Floating IPs Successfully ==>")
+    print("<== Released all Floating IPs Successfully ==>")
     return True
