@@ -69,10 +69,11 @@ def create_network(router, network_name, network_cidr):
     print "   Initiated VM Deployment "+network_name
     print "="*50
     print "\n"
-
+    
+    ins_data = []
     for i in range(1, VM_COUNT+1):
         vm_name = net_dict['name']+'_VM_'+str(i)
-        ins_data = launch_vm_on_network(vm_name, network_id)
+        ins_data.append(launch_vm_on_network(vm_name, network_id))
 
     print "\n"
     msg = "<== Completed VM Launch on Network with Floating IP Allocation "

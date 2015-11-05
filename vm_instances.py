@@ -31,11 +31,8 @@ def launch_vm_on_network(vm_name, network_id):
                                        flavor=flavor,
                                        key_name="admin",
                                        nics=[{'net-id': network_id}])
-        ins_dict = instance['name']
-        ins_status = True
     except Exception:
-        ins_dict = {}
-        ins_status = False
+        pass
 
     # Poll at 25 second intervals, until the status is no longer 'BUILD'
     print "  * Instance created on network: " + str(vm_name)

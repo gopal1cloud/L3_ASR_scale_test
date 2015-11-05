@@ -46,9 +46,10 @@ def print_instance_info(test_data):
     z.align["Tenant Name"] = "l"   # Left align source tenant values
     z.padding_width = 1
     for data in test_data:
-        z.add_row([data['network_data']['tenant_name'],
-                  data['instance_data']['instance_name'],
-                  data['instance_data']['status']])
+        for ins in data['instance_data']:
+            z.add_row([data['network_data']['tenant_name'],
+                      ins['instance_name'],
+                      ins['status']])
     return z
 
 
