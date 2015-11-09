@@ -1,9 +1,7 @@
+import os
 import logging
-import time
 from ncclient import manager
-import pprint
 from lxml import etree as etree
-from xml.etree import ElementTree as et
 
 LOG = logging.getLogger("scale_tester")
 
@@ -137,13 +135,12 @@ class GetASRCmd():
                 rpc_obj = conn.get(filter=filter_str)
 
                 LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                LOG.info("ASR Host %s VRF = %s" % \
-                    (self.asr_host, rpc_obj.data_xml))
+                LOG.info("ASR Host %s VRF = %s" % (self.asr_host,
+                                                   rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
                 response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
                     response'.format(ns)).text
-                # print response
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if " Interfaces:" in line:
@@ -188,7 +185,6 @@ class GetASRCmd():
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
                 response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
                     response'.format(ns)).text
-                # print response
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "ip nat pool " + nat_pool_name in line:
@@ -233,13 +229,12 @@ class GetASRCmd():
                 rpc_obj = conn.get(filter=filter_str)
 
                 LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                LOG.info("ASR Host %s VRF = %s" % \
-                    (self.asr_host,rpc_obj.data_xml))
+                LOG.info("ASR Host %s VRF = %s" % (self.asr_host,
+                                                   rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
                 response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
                     response'.format(ns)).text
-                # print response
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "ip route vrf " + vrfname in line:
@@ -264,7 +259,6 @@ class GetASRCmd():
             iproute_data['next_hop_address'] = next_hop_address
             iproute_data['status'] = status
         return iproute_data
-                                                                               
 
     def get_network_interface_detail(self, vrfname, interfacename):
         """
@@ -288,13 +282,12 @@ class GetASRCmd():
                 rpc_obj = conn.get(filter=filter_str)
 
                 LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                LOG.info("ASR Host %s VRF = %s" % \
-                    (self.asr_host,rpc_obj.data_xml))
+                LOG.info("ASR Host %s VRF = %s" % (self.asr_host,
+                                                   rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
                 response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
                     response'.format(ns)).text
-                # print response
                 response_data = iter(response.splitlines())
                 interfaces_status = response.splitlines()[1]
                 for line in response_data:
@@ -340,13 +333,12 @@ class GetASRCmd():
                 rpc_obj = conn.get(filter=filter_str)
 
                 LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                LOG.info("ASR Host %s VRF = %s" % \
-                    (self.asr_host,rpc_obj.data_xml))
+                LOG.info("ASR Host %s VRF = %s" % (self.asr_host,
+                                                   rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
                 response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
                     response'.format(ns)).text
-                # print response
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "Number of lines which match regexp" in line:
@@ -369,13 +361,12 @@ class GetASRCmd():
                 rpc_obj = conn.get(filter=filter_str)
 
                 LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                LOG.info("ASR Host %s VRF = %s" % \
-                    (self.asr_host,rpc_obj.data_xml))
+                LOG.info("ASR Host %s VRF = %s" % (self.asr_host,
+                                                   rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
                 response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
                     response'.format(ns)).text
-                # print response
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "Number of lines which match regexp" in line:

@@ -44,4 +44,3 @@ def get_tenant_nova_credentials(tenant_name):
     data['auth_url'] = OS_AUTH_URL
     data['project_id'] = tenant_name
     return data
-

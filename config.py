@@ -38,8 +38,8 @@ def print_scale_test_config():
     """
     print '=' * 70
     print "    Configuration for this Scale Test"
-    print '='*70
-    
+    print '=' * 70
+
     print " Tenant will be created with prefix                         : " \
         + TENANT_NAME_PREFIX
     print " No of Tenants will be created                              : " \

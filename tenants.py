@@ -8,6 +8,7 @@ Password is second argument of script
 Developer: gopal@onecloudinc.com
 """
 
+import os
 from keystoneclient.v2_0 import client as ksclient
 from credentials import get_credentials
 from config import USER_COUNT, USER_PASSWORD
@@ -23,15 +24,16 @@ def create_tenant(tenant_name):
     """
 
     print "\n"
-    print "="*50
-    print "   Initiated Tenant Creation for "+tenant_name
-    print "="*50
+    print "=" * 50
+    print "   Initiated Tenant Creation for " + tenant_name
+    print "=" * 50
     print "\n"
 
     try:
         try:
             new_tenant = keystone.tenants.create(tenant_name=tenant_name,
-                                                 description="Scale tenant created",
+                                                 description="Scale tenant \
+                                                     created",
                                                  enabled=True)
         except Exception:
             new_tenant = keystone.tenants.find(name=tenant_name)
@@ -41,13 +43,14 @@ def create_tenant(tenant_name):
         user_data = []
         for j in range(USER_COUNT):
             j += 1
-            user_name = tenant_name+'-user'+'-'+str(j)
+            user_name = tenant_name + '-user' + '-' + str(j)
             user_data.append(create_user(user_name, tenant_id))
     except Exception:
         tenant_status = False
 
     print "\n"
-    msg = "<== Completed Tenant Creation and Users per Tenant with _member_ role "
+    msg = "<== Completed Tenant Creation and Users per Tenant \
+        with _member_ role "
     msg += "Successfully ==>"
     print msg
     print "\n"
@@ -96,7 +99,7 @@ def delete_tenant(tenant_name):
         tenant = keystone.tenants.find(name=tenant_name)
         for j in range(USER_COUNT):
             j += 1
-            user_name = tenant_name+'-user'+'-'+str(j)
+            user_name = tenant_name + '-user' + '-' + str(j)
             delete_user(user_name, tenant.id)
     except Exception:
         pass
@@ -109,6 +112,7 @@ def delete_tenant(tenant_name):
     print('   - Tenant %s deleted' % tenant_name)
 
     return True
+
 
 def delete_user(user_name, tenant_id):
     """
@@ -127,7 +131,4 @@ def delete_user(user_name, tenant_id):
     except Exception:
         pass
     print('   - Deleted User %s' % user_name)
-    
     return True
-
-

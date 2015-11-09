@@ -44,7 +44,7 @@ def launch_vm_on_network(tenant_name, vm_name, network_id):
         # Retrieve the instance again so the status field updates
         instance = nova.servers.get(instance.id)
         status = instance.status
-    
+
     print "   - Current status: %s" % status
     if FLOATING_IP_CREATION:
         add_floating_ip_for_vm(tenant_name, instance)

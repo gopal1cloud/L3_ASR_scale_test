@@ -7,7 +7,8 @@ Developer: gopal@onecloudinc.com
 import os
 from neutronclient.v2_0 import client
 import novaclient.v1_1.client as nvclient
-from credentials import get_credentials, get_nova_credentials, get_tenant_nova_credentials
+from credentials import get_credentials, get_nova_credentials, \
+    get_tenant_nova_credentials
 from config import FLOATING_IP_POOL
 
 neutron_credentials = get_credentials()
