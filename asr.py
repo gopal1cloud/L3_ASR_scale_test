@@ -352,7 +352,7 @@ class GetASRCmd():
                     if "Number of lines which match regexp" in line:
                         nat_count = line.split('Number of lines which match \
                             regexp = ')[1]
-                        if int(nat_count) == 1:
+                        if int(nat_count) >= 1:
                             nat_entry = "Found"
                             status = "Pass"
                         if int(nat_count) == 0:
@@ -381,7 +381,7 @@ class GetASRCmd():
                     if "Number of lines which match regexp" in line:
                         access_list_count = line.split('Number of lines \
                             which match regexp = ')[1]
-                        if int(access_list_count) == 1:
+                        if int(access_list_count) >= 1:
                             access_list_entry = "Found"
                             status = "Pass"
                         if int(access_list_count) == 0:

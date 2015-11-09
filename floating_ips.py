@@ -7,7 +7,7 @@ Developer: gopal@onecloudinc.com
 import os
 from neutronclient.v2_0 import client
 import novaclient.v1_1.client as nvclient
-from credentials import get_credentials, get_nova_credentials
+from credentials import get_credentials, get_nova_credentials, get_tenant_nova_credentials
 from config import FLOATING_IP_POOL
 
 neutron_credentials = get_credentials()
@@ -19,12 +19,13 @@ if not nova.keypairs.findall(name="admin"):
         nova.keypairs.create(name="admin", public_key=fpubkey.read())
 
 
-def add_floating_ip_for_vm(instance):
+def add_floating_ip_for_vm(tenant_name, instance):
     """
     This method is used to allocate & associate floating IP to the given VM\
     based on the availability from the defined pool.
     """
-
+    tenant_credentials = get_tenant_nova_credentials(tenant_name)
+    nova = nvclient.Client(**tenant_credentials)
     floating_ip = nova.floating_ips.create(FLOATING_IP_POOL)
     instance.add_floating_ip(floating_ip)
     print "   - Assigned Floating IP: " + str(floating_ip.ip)

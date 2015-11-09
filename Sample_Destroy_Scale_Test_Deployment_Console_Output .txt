@@ -1,9 +1,13 @@
-[onecloud@localhost ]$ python destroy_deploy.py  
+[onecloud@localhost ]$ python destroy_deploy.py 
+
 
 ======================================================================
     Configuration for this Scale Test
 ======================================================================
- Network will be created with prefix                        : scaletest1
+ Tenant will be created with prefix                         : tenant-test
+ No of Tenants will be created                              : 2
+ Tenant base index range starts from                        : 101
+ No of Users per Tenant                                     : 1
  No of Networks                                             : 2
  No of VMs per Network                                      : 1
  Name of the External Network with be connected with Router : public
@@ -11,27 +15,26 @@
 ======================================================================
 
 
-
 Destroying Scale Test Deployment
 
 
 ==================================================
-   Terminating VM launched on scaletest1_1
+   Terminating VM launched on tenant-test-101-net-1
 ==================================================
 
 
-  * Instance terminated on network: scaletest1_1_VM_1
+  * Instance terminated on network: tenant-test-101-net-1-vm-1
 
 
 <== Completed VM Termination on Network ==>
 
 
 ==================================================
-   Terminating VM launched on scaletest1_2
+   Terminating VM launched on tenant-test-101-net-2
 ==================================================
 
 
-  * Instance terminated on network: scaletest1_2_VM_1
+  * Instance terminated on network: tenant-test-101-net-2-vm-1
 
 
 <== Completed VM Termination on Network ==>
@@ -42,17 +45,63 @@ Destroying Scale Test Deployment
 ==================================================
 
 
-   Deleted scaletest1_2
-   Deleted scaletest1_1
+   Deleted tenant-test-101-net-1
+   Deleted tenant-test-101-net-2
 
 
-   Deleted scaletest1_router
+   Deleted tenant-test-101-router
 
 
 <== Completed Network, Router Deletion from External Gateway Successfully ==>
 
 
+<== Released all Floating IPs Successfully ==>
+   - Deleted User tenant-test-101-user-1
+   - Tenant tenant-test-101 deleted
+
+
+==================================================
+   Terminating VM launched on tenant-test-102-net-1
 ==================================================
 
+
+  * Instance terminated on network: tenant-test-102-net-1-vm-1
+
+
+<== Completed VM Termination on Network ==>
+
+
+==================================================
+   Terminating VM launched on tenant-test-102-net-2
+==================================================
+
+
+  * Instance terminated on network: tenant-test-102-net-2-vm-1
+
+
+<== Completed VM Termination on Network ==>
+
+
+==================================================
+   Initiated Network Deletion 
+==================================================
+
+
+   Deleted tenant-test-102-net-1
+   Deleted tenant-test-102-net-2
+
+
+   Deleted tenant-test-102-router
+
+
+<== Completed Network, Router Deletion from External Gateway Successfully ==>
+
+
+<== Released all Floating IPs Successfully ==>
+   - Tenant tenant-test-102 deleted
+==================================================
+
+
 Scale Test Deployment Completed
+
 

@@ -5,17 +5,22 @@ Developer: gopal@onecloudinc.com
 """
 
 OS_USERNAME = 'admin'
-OS_TENANT_NAME = 'scaletest1'
+OS_TENANT_NAME = 'admin'
 OS_PASSWORD = 'admin123'
-OS_AUTH_URL = 'http://10.1.25.136:5000/v2.0/'
-NETWORK_NAME_PREFFIX = OS_TENANT_NAME
+OS_AUTH_URL = 'http://10.1.25.134:5000/v2.0/'
+TENANT_COUNT = 2
+TENANT_NAME_PREFIX = 'tenant-test'
+TENANT_BASE_INDEX = 101
+USER_COUNT = 1
+USER_PASSWORD = 'secret'
 NETWORK_COUNT = 2
 VM_COUNT = 1
 EXTERNAL_NETWORK = 'public'
 FLOATING_IP_POOL = 'public'
 
+FLOATING_IP_CREATION = True
 ENABLE_ASR_VERIFICATION = True
-DEPLOYMENT_ID = 'ans136'
+DEPLOYMENT_ID = 'ans134'
 ASR_HOST = '10.10.10.10'
 ASR_USER = 'admin'
 ASR_PASSWORD = 'admin'
@@ -33,10 +38,16 @@ def print_scale_test_config():
     """
     print '=' * 70
     print "    Configuration for this Scale Test"
-    print '=' * 70
-
-    print " Network will be created with prefix                        : " \
-        + NETWORK_NAME_PREFFIX
+    print '='*70
+    
+    print " Tenant will be created with prefix                         : " \
+        + TENANT_NAME_PREFIX
+    print " No of Tenants will be created                              : " \
+        + str(TENANT_COUNT)
+    print " Tenant base index range starts from                        : " \
+        + str(TENANT_BASE_INDEX)
+    print " No of Users per Tenant                                     : " \
+        + str(USER_COUNT)
     print " No of Networks                                             : " \
         + str(NETWORK_COUNT)
     print " No of VMs per Network                                      : " \
