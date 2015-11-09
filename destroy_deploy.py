@@ -13,6 +13,7 @@ from networks import delete_network
 credentials = get_credentials()
 neutron = client.Client(**credentials)
 
+
 def main():
     """
     This method will destory the scale test deployment based on the global \
@@ -24,10 +25,10 @@ def main():
     print_scale_test_config()
     print "\n"
     print "Destroying Scale Test Deployment"
-    
+
     delete_network()
-    
-    print "="*50
+
+    print "=" * 50
     print "\n"
     print "Scale Test Deployment Completed"
     print "\n"

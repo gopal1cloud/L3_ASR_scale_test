@@ -5,6 +5,7 @@ Description: This script is to create network, subnets, router with \
 Developer: gopal@onecloudinc.com
 """
 
+import os
 from neutronclient.v2_0 import client
 from credentials import get_credentials
 from config import NETWORK_NAME_PREFFIX, NETWORK_COUNT, VM_COUNT, \
@@ -24,9 +25,9 @@ def create_network(router, network_name, network_cidr):
 
     try:
         print "\n"
-        print "="*50
-        print "   Initiated Network Creation for "+network_name
-        print "="*50
+        print "=" * 50
+        print "   Initiated Network Creation for " + network_name
+        print "=" * 50
         print "\n"
 
         body_sample = {'network': {'name': network_name,
@@ -42,12 +43,12 @@ def create_network(router, network_name, network_cidr):
             net_dict = {}
             net_status = False
 
-        subnet_name = network_name+"_subnet"
+        subnet_name = network_name + "_subnet"
         try:
-            body_create_subnet = {'subnets': [{'name': network_name+"_subnet",
-                                  'cidr': network_cidr,
-                                  'ip_version': 4,
-                                  'network_id': network_id}]}
+            body_create_subnet = {'subnets': [{'name': network_name + "_subnet",
+                                               'cidr': network_cidr,
+                                               'ip_version': 4,
+                                               'network_id': network_id}]}
             subnet_detail = neutron.create_subnet(body=body_create_subnet)
             subnet = subnet_detail['subnets'][0]
             print('   - Created subnet %s' % subnet['name'])
@@ -65,28 +66,28 @@ def create_network(router, network_name, network_cidr):
         msg += "Successfully ==>"
         print msg
     print "\n"
-    print "="*50
-    print "   Initiated VM Deployment "+network_name
-    print "="*50
+    print "=" * 50
+    print "   Initiated VM Deployment " + network_name
+    print "=" * 50
     print "\n"
-    
+
     ins_data = []
-    for i in range(1, VM_COUNT+1):
-        vm_name = net_dict['name']+'_VM_'+str(i)
+    for i in range(1, VM_COUNT + 1):
+        vm_name = net_dict['name'] + '_VM_' + str(i)
         ins_data.append(launch_vm_on_network(vm_name, network_id))
 
     print "\n"
     msg = "<== Completed VM Launch on Network with Floating IP Allocation "
     msg += "Successfully ==>"
     print msg
-  
+
     result = {'network_data': {'tenant_name': OS_TENANT_NAME,
-                                   'network_name': network_name,
-                                   'network_cidr': network_cidr,
-                                   'subnet_name': subnet_name,
-                                   'network_id': network_id,
-                                   'network_vlan_id': network_vlan,
-                                   'status': net_status},
+                               'network_name': network_name,
+                               'network_cidr': network_cidr,
+                               'subnet_name': subnet_name,
+                               'network_id': network_id,
+                               'network_vlan_id': network_vlan,
+                               'status': net_status},
               'instance_data': ins_data}
     return result
 
@@ -98,27 +99,27 @@ def delete_network():
     """
     network_list = []
     router_list = []
-    router_list.append(NETWORK_NAME_PREFFIX+'_router')
+    router_list.append(NETWORK_NAME_PREFFIX + '_router')
     for i in range(NETWORK_COUNT):
         i += 1
-        network_list.append(NETWORK_NAME_PREFFIX+'_'+str(i))
+        network_list.append(NETWORK_NAME_PREFFIX + '_' + str(i))
     for network_name in network_list:
         print "\n"
-        print "="*50
-        print "   Terminating VM launched on "+network_name
-        print "="*50
+        print "=" * 50
+        print "   Terminating VM launched on " + network_name
+        print "=" * 50
         print "\n"
-        for i in range(1, VM_COUNT+1):
-            vm_name = network_name+'_VM_'+str(i)
+        for i in range(1, VM_COUNT + 1):
+            vm_name = network_name + '_VM_' + str(i)
             terminate_vm_on_network(vm_name, network_name)
         print "\n"
         print("<== Completed VM Termination on Network ==>")
     networks = neutron.list_networks()['networks']
     routers = neutron.list_routers()['routers']
     print "\n"
-    print "="*50
+    print "=" * 50
     print "   Initiated Network Deletion "
-    print "="*50
+    print "=" * 50
     print "\n"
     for router in routers:
         if router['name'] in router_list:
@@ -144,14 +145,14 @@ def delete_network():
 
                         neutron.delete_subnet(subnet['id'])
                     neutron.delete_network(network['id'])
-                    print "   Deleted "+network['name']
+                    print "   Deleted " + network['name']
             print "\n"
             neutron.remove_gateway_router(router['id'])
             try:
                 neutron.delete_router(router['id'])
             except:
                 pass
-            print "   Deleted "+router['name']
+            print "   Deleted " + router['name']
     print "\n"
     msg = "<== Completed Network, Router Deletion from External Gateway "
     msg += "Successfully ==>"

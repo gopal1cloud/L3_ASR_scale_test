@@ -21,8 +21,6 @@ ASR_USER = 'admin'
 ASR_PASSWORD = 'admin'
 
 
-
-
 """
 Test Configuration Ends Here with the global parameters.
 """
@@ -33,9 +31,9 @@ def print_scale_test_config():
     This method is used to print the current test configuration on scale test \
     deployment initialization.
     """
-    print '='*70
+    print '=' * 70
     print "    Configuration for this Scale Test"
-    print '='*70
+    print '=' * 70
 
     print " Network will be created with prefix                        : " \
         + NETWORK_NAME_PREFFIX
@@ -47,4 +45,4 @@ def print_scale_test_config():
         + EXTERNAL_NETWORK
     print " Name of the Floating IP Pool will be used for Allocation   : " \
         + FLOATING_IP_POOL
-    print '='*70
+    print '=' * 70

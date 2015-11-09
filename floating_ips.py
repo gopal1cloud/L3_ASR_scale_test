@@ -27,7 +27,7 @@ def add_floating_ip_for_vm(instance):
 
     floating_ip = nova.floating_ips.create(FLOATING_IP_POOL)
     instance.add_floating_ip(floating_ip)
-    print "   - Assigned Floating IP: "+str(floating_ip.ip)
+    print "   - Assigned Floating IP: " + str(floating_ip.ip)
     return True
 
 
