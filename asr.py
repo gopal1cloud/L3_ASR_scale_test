@@ -139,8 +139,8 @@ class GetASRCmd():
                                                    rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
-                response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
-                    response'.format(ns)).text
+                search_str = '{0}cli-oper-data-block/{0}item/{0}response'
+                response = tree.find(search_str.format(ns)).text
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if " Interfaces:" in line:
@@ -183,8 +183,8 @@ class GetASRCmd():
                     self.asr_host, rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
-                response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
-                    response'.format(ns)).text
+                search_str = '{0}cli-oper-data-block/{0}item/{0}response'
+                response = tree.find(search_str.format(ns)).text
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "ip nat pool " + nat_pool_name in line:
@@ -233,8 +233,8 @@ class GetASRCmd():
                                                    rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
-                response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
-                    response'.format(ns)).text
+                search_str = '{0}cli-oper-data-block/{0}item/{0}response'
+                response = tree.find(search_str.format(ns)).text
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "ip route vrf " + vrfname in line:
@@ -286,8 +286,8 @@ class GetASRCmd():
                                                    rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
-                response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
-                    response'.format(ns)).text
+                search_str = '{0}cli-oper-data-block/{0}item/{0}response'
+                response = tree.find(search_str.format(ns)).text
                 response_data = iter(response.splitlines())
                 interfaces_status = response.splitlines()[1]
                 for line in response_data:
@@ -337,8 +337,8 @@ class GetASRCmd():
                                                    rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
-                response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
-                    response'.format(ns)).text
+                search_str = '{0}cli-oper-data-block/{0}item/{0}response'
+                response = tree.find(search_str.format(ns)).text
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "Number of lines which match regexp" in line:
@@ -365,8 +365,8 @@ class GetASRCmd():
                                                    rpc_obj.data_xml))
                 tree = etree.XML(rpc_obj.data_xml)
                 ns = '{urn:ietf:params:xml:ns:netconf:base:1.0}'
-                response = tree.find('{0}cli-oper-data-block/{0}item/{0} \
-                    response'.format(ns)).text
+                search_str = '{0}cli-oper-data-block/{0}item/{0}response'
+                response = tree.find(search_str.format(ns)).text
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "Number of lines which match regexp" in line:
