@@ -303,8 +303,8 @@ def main():
         print asr_network_vrf_info(router_data)
         print "\n"
 
-        print "           OpenStack-ASR Network Interface's Dynamic NAT & \
-            Access list Entry Verification Results              "
+        print("           OpenStack-ASR Network Interface's Dynamic NAT & "
+              "Access list Entry Verification Results              ")
         print asr_interface_nat_info(router_data)
         print "\n"
 
