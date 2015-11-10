@@ -6,8 +6,8 @@ from lxml import etree as etree
 LOG = logging.getLogger("scale_tester")
 
 formatter = \
-    logging.Formatter('%(asctime)s - %(module)s - %(funcName)s - \
-        (%(lineno)d) %(levelname)s \n %(message)s')
+    logging.Formatter('%(asctime)s - %(module)s - %(funcName)s - '
+                      '(%(lineno)d) %(levelname)s \n %(message)s')
 
 # All inclusive log
 fh = logging.FileHandler("scale_tester_ASR.log")
@@ -342,8 +342,8 @@ class GetASRCmd():
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "Number of lines which match regexp" in line:
-                        nat_count = line.split('Number of lines which match \
-                            regexp = ')[1]
+                        nat_count = line.split('Number of lines which match '
+                                               'regexp = ')[1]
                         if int(nat_count) >= 1:
                             nat_entry = "Found"
                             status = "Pass"
@@ -370,8 +370,9 @@ class GetASRCmd():
                 response_data = iter(response.splitlines())
                 for line in response_data:
                     if "Number of lines which match regexp" in line:
-                        access_list_count = line.split('Number of lines \
-                            which match regexp = ')[1]
+                        access_list_count = line.split('Number of lines '
+                                                       'which match '
+                                                       'regexp = ')[1]
                         if int(access_list_count) >= 1:
                             access_list_entry = "Found"
                             status = "Pass"

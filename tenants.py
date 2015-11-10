@@ -49,7 +49,7 @@ def create_tenant(tenant_name):
         tenant_status = False
 
     print "\n"
-    msg = ('<== Completed Tenant Creation and Users per Tenant'
+    msg = ('<== Completed Tenant Creation and Users per Tenant '
            'with _member_ role ')
     msg += 'Successfully ==>'
     print msg
