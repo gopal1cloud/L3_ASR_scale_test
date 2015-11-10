@@ -45,8 +45,8 @@ Destroying Scale Test Deployment
 ==================================================
 
 
-   Deleted tenant-test-101-net-1
    Deleted tenant-test-101-net-2
+   Deleted tenant-test-101-net-1
 
 
    Deleted tenant-test-101-router
@@ -57,7 +57,7 @@ Destroying Scale Test Deployment
 
 <== Released all Floating IPs Successfully ==>
    - Deleted User tenant-test-101-user-1
-   - Tenant tenant-test-101 deleted
+   - Deleted Tenant tenant-test-101 
 
 
 ==================================================
@@ -87,21 +87,22 @@ Destroying Scale Test Deployment
 ==================================================
 
 
-   Deleted tenant-test-102-net-1
    Deleted tenant-test-102-net-2
+   Deleted tenant-test-102-net-1
 
 
    Deleted tenant-test-102-router
 
 
-<== Completed Network, Router Deletion from External Gateway Successfully ==>
+<== Completed Network, Router Deletion from xternal Gateway Successfully ==>
 
 
 <== Released all Floating IPs Successfully ==>
-   - Tenant tenant-test-102 deleted
+   - Deleted User tenant-test-102-user-1
+   - Deleted Tenant tenant-test-102 
 ==================================================
 
 
-Scale Test Deployment Completed
+Cleaned Scale Test Deployment
 
 

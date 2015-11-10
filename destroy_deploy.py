@@ -5,6 +5,7 @@ Description: This script is to destory the L3/HA scale test deployment
 Developer: gopal@onecloudinc.com
 """
 
+import os
 from neutronclient.v2_0 import client
 from credentials import get_credentials
 from config import TENANT_BASE_INDEX, TENANT_COUNT, TENANT_NAME_PREFIX, \
@@ -35,7 +36,7 @@ def main():
         delete_tenant(tenant_name)
     print "=" * 50
     print "\n"
-    print "Scale Test Deployment Completed"
+    print "Cleaned Scale Test Deployment"
     print "\n"
 
 

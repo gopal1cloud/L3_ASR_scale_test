@@ -4,7 +4,8 @@ Developer: gopal@onecloudinc.com
 
 Description:
 ------------
-This script will create Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified on the config.py file.
+This script will create Tenants, Users per Tenant, Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified on the config.py file. 
+For each run of Scale Test Deployment Script, a summarized result for OpenStack and ASR VRF verification should be generated that describes a pass/fail for each test milestone.
 
 
 Stepts to run the scale test deployment:
@@ -19,9 +20,13 @@ OS_USERNAME=admin
 OS_TENANT_NAME=admin
 OS_PASSWORD=admin123
 OS_AUTH_URL=http://10.1.25.134/v2.0/
-NETWORK_NAME_PREFFIX = 'TEST'
+TENANT_COUNT = 2
+TENANT_NAME_PREFIX = 'tenant-test'
+TENANT_BASE_INDEX = 101
+USER_COUNT = 1
+USER_PASSWORD = 'secret'
 NETWORK_COUNT = 2
-VM_COUNT = 2
+VM_COUNT = 1
 EXTERNAL_NETWORK = 'public'
 FLOATING_IP_POOL = 'public'
 
@@ -33,7 +38,7 @@ Step :: 2
 
 [onecloud@localhost ]$ python initialize_deploy.py
 
-This script will create Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
+This script will create Tenants, Users per Tenant, Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
 
 .. image:: https://raw.githubusercontent.com/gopal1cloud/L3_ASR_scale_test/l3_asr_develop/Scale_Test_Deployment_Per_Tenant_Screenshot.png
    :alt: Scale Test Topology
@@ -45,7 +50,7 @@ Step :: 3
 
 [onecloud@localhost ]$ python destroy_deploy.py
 
-This script will delete Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
+This script will delete Tenants, Users per Tenant, Networks, Subnets, Router with External Gateway, VMS, Floating IPs based on global configuration parameters specified for a single tenant.
 
 Thats It.
 

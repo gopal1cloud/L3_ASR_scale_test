@@ -43,15 +43,15 @@ def create_tenant(tenant_name):
         user_data = []
         for j in range(USER_COUNT):
             j += 1
-            user_name = tenant_name + '-user' + '-' + str(j)
+            user_name = tenant_name + '-user-' + str(j)
             user_data.append(create_user(user_name, tenant_id))
     except Exception:
         tenant_status = False
 
     print "\n"
-    msg = "<== Completed Tenant Creation and Users per Tenant \
-        with _member_ role "
-    msg += "Successfully ==>"
+    msg = ('<== Completed Tenant Creation and Users per Tenant'
+           'with _member_ role ')
+    msg += 'Successfully ==>'
     print msg
     print "\n"
 
@@ -99,18 +99,17 @@ def delete_tenant(tenant_name):
         tenant = keystone.tenants.find(name=tenant_name)
         for j in range(USER_COUNT):
             j += 1
-            user_name = tenant_name + '-user' + '-' + str(j)
+            user_name = tenant_name + '-user-' + str(j)
             delete_user(user_name, tenant.id)
     except Exception:
         pass
     try:
-        new_tenant = keystone.tenants.get(name=tenant_name)
+        new_tenant = keystone.tenants.find(name=tenant_name)
         new_tenant.delete()
+        print('   - Deleted Tenant %s ' % tenant_name)
     except Exception:
+        print("   - Tenant Not Found: %s" % tenant_name)
         pass
-
-    print('   - Tenant %s deleted' % tenant_name)
-
     return True
 
 
@@ -119,16 +118,10 @@ def delete_user(user_name, tenant_id):
     This method is to delete users per Tenant
     """
     try:
-        admin_user = keystone.users.find(name='admin')
-        admin_role = keystone.roles.find(name='admin')
-        keystone.roles.remove_user_role(admin_user, admin_role, tenant_id)
-    except Exception:
-        pass
-
-    try:
-        user = keystone.users.get(name=user_name)
+        user = keystone.users.find(name=user_name)
         user.delete()
     except Exception:
+        print("   - User Not Found: %s" % user_name)
         pass
     print('   - Deleted User %s' % user_name)
     return True
