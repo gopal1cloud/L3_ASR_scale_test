@@ -16,10 +16,12 @@ Step :: 1
 
 ==> Define the Scale Test Configuration for the global parameters in 'config.py' file.
 
-OS_USERNAME=admin
-OS_TENANT_NAME=admin
-OS_PASSWORD=admin123
-OS_AUTH_URL=http://10.1.25.134/v2.0/
+# Tenant Settings
+ 
+OS_USERNAME = 'admin'
+OS_TENANT_NAME = 'admin'
+OS_PASSWORD = 'admin123'
+OS_AUTH_URL = 'http://10.1.25.136:5000/v2.0/'
 TENANT_COUNT = 2
 TENANT_NAME_PREFIX = 'tenant-test'
 TENANT_BASE_INDEX = 101
@@ -28,7 +30,25 @@ USER_PASSWORD = 'secret'
 NETWORK_COUNT = 2
 VM_COUNT = 1
 EXTERNAL_NETWORK = 'public'
+
+# Floating IP Settings
+
+FLOATING_IP_CREATION = True
 FLOATING_IP_POOL = 'public'
+
+# Cisco ASR Settings
+
+ENABLE_ASR_VERIFICATION = True
+DEPLOYMENT_ID = 'ans136'
+ASR_HOST = '10.10.10.10'
+ASR_USER = 'admin'
+ASR_PASSWORD = 'admin'
+
+Note: 
+
+- Modify your target OpenStack credentials on the above config Tenant Settings part.
+- If you want to assign Floating IP for VMs during Scale Test, Enable FLOATING_IP_CREATION = True & FLOATING_IP_POOL detail on the above config Floating IP Settings part.
+- If you want to do ASR VRF Verification for the OpenStack Events during Scale Test and get the consolidated verification report, Enable ENABLE_ASR_VERIFICATION = True & your Cisco ASR credentials with the OpenStack DEPLOYMENT_ID which you mentioned in 'cisco_router_plugin.ini' file from your target OpenStack Environment on the above config Cisco ASR Settings part.
 
 
 Step :: 2

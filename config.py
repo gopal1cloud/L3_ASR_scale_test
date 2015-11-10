@@ -4,10 +4,12 @@ Description: Define the Scale Test Configuration with the below global \
 Developer: gopal@onecloudinc.com
 """
 
+# Tenant Settings
+ 
 OS_USERNAME = 'admin'
 OS_TENANT_NAME = 'admin'
 OS_PASSWORD = 'admin123'
-OS_AUTH_URL = 'http://10.1.25.134:5000/v2.0/'
+OS_AUTH_URL = 'http://10.1.25.136:5000/v2.0/'
 TENANT_COUNT = 2
 TENANT_NAME_PREFIX = 'tenant-test'
 TENANT_BASE_INDEX = 101
@@ -16,11 +18,16 @@ USER_PASSWORD = 'secret'
 NETWORK_COUNT = 2
 VM_COUNT = 1
 EXTERNAL_NETWORK = 'public'
-FLOATING_IP_POOL = 'public'
+
+# Floating IP Settings
 
 FLOATING_IP_CREATION = True
-ENABLE_ASR_VERIFICATION = True
-DEPLOYMENT_ID = 'ans134'
+FLOATING_IP_POOL = 'public'
+
+# Cisco ASR Settings
+
+ENABLE_ASR_VERIFICATION = False
+DEPLOYMENT_ID = 'ans136'
 ASR_HOST = '10.10.10.10'
 ASR_USER = 'admin'
 ASR_PASSWORD = 'admin'
