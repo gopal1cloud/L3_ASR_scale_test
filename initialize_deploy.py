@@ -16,9 +16,12 @@ from tenants import create_tenant
 from networks import create_network
 from prettytable import PrettyTable
 from asr import GetASRCmd
+from datetime import datetime, timedelta
+from pytz import timezone
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
+fmt = "%Y-%m-%d %H:%M:%S %Z%z"
 
 
 def print_tenant_info(tenant_data):
@@ -152,7 +155,7 @@ def main():
     config parameters mentioned on config.py file and creates the router with \
     external gateway connectivity to public network.
     """
-
+    main_start_time = datetime.now(timezone('US/Pacific'))
     print "\n"
     print_scale_test_config()
     print "\n"
@@ -160,6 +163,7 @@ def main():
 
     tenant_data = []
     index = TENANT_BASE_INDEX
+    start_time = datetime.now(timezone('US/Pacific'))
     for i in range(1, TENANT_COUNT + 1):
         tenant_name = TENANT_NAME_PREFIX + '-' + str(index)
         index += 1
@@ -168,6 +172,15 @@ def main():
         except Exception as exc:
             print "Exception accoured on Tenant Creation: %s" % (exc.message)
             pass
+
+    end_time = datetime.now(timezone('US/Pacific'))
+    print "-"*65
+    print ("    Tenant & User Creation Time Summary :")
+    print "-"*65
+    print "\n"
+    print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+    print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+    print "\n"
 
     router_data = []
     test_data = []
@@ -186,6 +199,7 @@ def main():
 
         router = neutron.list_routers(name=router_name)['routers']
         if not router:
+            start_time = datetime.now(timezone('US/Pacific'))
             router_info = neutron.create_router({'router': {
                 'name': router_name, 'tenant_id': tenant['tenant_id']}})
             router = router_info['router']
@@ -205,10 +219,20 @@ def main():
                                     'tenant_id': tenant['tenant_id']})
         router_id = router['id']
         print('   - Created Router %s' % router['name'])
-
+        print "\n"
+        end_time = datetime.now(timezone('US/Pacific'))
+        print "\n"
+        print "-"*65
+    	print ("    Router %s Creation Time Summary :"  % router_name)
+        print "-"*65
+        print "\n"
+        print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+        print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+        print "\n"
+        
         for i in range(1, NETWORK_COUNT + 1):
             network_index = str(i)
-            network_cidr = str(i) + "." + str(i) + "." + str(i) + ".0/24"
+            network_cidr = str(i) + "." + str(i) + "." + str(i) + ".0/22"
             test_data.append(create_network(tenant, router,
                              network_index, network_cidr))
 
@@ -221,7 +245,7 @@ def main():
         if ENABLE_ASR_VERIFICATION:
             vrf_router_id = router_id[:6]
             vrfname = "nrouter" + '-' + vrf_router_id + '-' + DEPLOYMENT_ID
-
+            start_time = datetime.now(timezone('US/Pacific'))
             asr_verify_cmd = GetASRCmd(asr_host=ASR_HOST,
                                        asr_host_port=22,
                                        asr_user=ASR_USER,
@@ -251,6 +275,16 @@ def main():
                         asr_verify_cmd.get_interface_nat_access_detail(
                             interface['vlan_id'], interfaceid))
                 asr_report = True
+                end_time = datetime.now(timezone('US/Pacific'))
+                print "\n"
+                print "-"*65
+                print ("    ASR Functionality Verification Time Summary :")
+                print "-"*65
+                print "\n"
+                print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+                print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+                print "\n"
+
             except Exception as exc:
                 print "\n"
                 print "[ERROR] Caught exception on ASR Verification : %s" % \
@@ -308,5 +342,15 @@ def main():
         print asr_interface_nat_info(router_data)
         print "\n"
 
+      
 if __name__ == '__main__':
+    main_start_time = datetime.now(timezone('US/Pacific'))
     main()
+    main_end_time = datetime.now(timezone('US/Pacific'))
+    print "-"*65
+    print ("    Scale Test Deployment Consolidated Time Summary :")
+    print "-"*65
+    print "\n"
+    print('   - Test Started Time:\t %s' % (main_start_time.strftime(fmt)))
+    print('   - Test Ended Time:\t %s' % (main_end_time.strftime(fmt)))
+    print "\n"

@@ -11,9 +11,12 @@ from credentials import get_credentials
 from config import NETWORK_COUNT, VM_COUNT, FLOATING_IP_CREATION
 from vm_instances import launch_vm_on_network, terminate_vm_on_network
 from floating_ips import release_all_floating_ips
+from datetime import datetime, timedelta
+from pytz import timezone
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
+fmt = "%Y-%m-%d %H:%M:%S %Z%z"
 
 
 def create_network(tenant, router, network_index, network_cidr):
@@ -33,6 +36,7 @@ def create_network(tenant, router, network_index, network_cidr):
 
         body_sample = {'network': {'name': network_name,
                                    'tenant_id': tenant['tenant_id']}}
+        start_time = datetime.now(timezone('US/Pacific'))
         try:
             net = neutron.create_network(body=body_sample)
             net_dict = net['network']
@@ -63,12 +67,20 @@ def create_network(tenant, router, network_index, network_cidr):
         neutron.add_interface_router(router['id'], {'subnet_id': subnet['id'],
                                      'tenant_id': tenant['tenant_id']})
         print ('   - Created interface between %s' % subnet['name'])
-
     finally:
         print "\n"
         msg = "<== Completed Network Creation with External Gateway "
         msg += "Successfully ==>"
         print msg
+        end_time = datetime.now(timezone('US/Pacific')) 
+        print "\n"
+        print "-"*65
+        print ("    Network %s Creation Time Summary :" % network_name)
+        print "-"*65
+        print "\n"
+        print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+        print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+
     print "\n"
     print "=" * 50
     print "   Initiated VM Deployment " + network_name
@@ -78,13 +90,22 @@ def create_network(tenant, router, network_index, network_cidr):
     ins_data = []
     for i in range(1, VM_COUNT + 1):
         vm_name = network_name + '-vm-' + str(i)
+        start_time = datetime.now(timezone('US/Pacific'))
         ins_data.append(launch_vm_on_network(tenant['tenant_name'],
                         vm_name, network_id))
+        end_time = datetime.now(timezone('US/Pacific'))
 
     print "\n"
     msg = "<== Completed VM Launch on Network with Floating IP Allocation "
     msg += "Successfully ==>"
     print msg
+    print "\n"
+    print "-"*65
+    print ("    Instance %s Creation Time Summary :" % vm_name)
+    print "-"*65
+    print "\n"
+    print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+    print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
 
     result = {'network_data': {'tenant_name': tenant['tenant_name'],
                                'network_name': network_name,
@@ -116,9 +137,19 @@ def delete_network(tenant_name):
         print "\n"
         for i in range(1, VM_COUNT + 1):
             vm_name = network_name + '-vm-' + str(i)
+            start_time = datetime.now(timezone('US/Pacific'))
             terminate_vm_on_network(tenant_name, vm_name, network_name)
+            end_time = datetime.now(timezone('US/Pacific'))
         print "\n"
         print("<== Completed VM Termination on Network ==>")
+        print "\n"
+        print "-"*65
+        print ("    Instance %s Deletion Time Summary :" % vm_name)
+        print "-"*65
+        print "\n"
+        print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+        print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+
     networks = neutron.list_networks()['networks']
     routers = neutron.list_routers()['routers']
     print "\n"
@@ -139,6 +170,7 @@ def delete_network(tenant_name):
                             subnet_id=subnet['id'],
                             tenant_id=tenant_id)['ports']
                         for port in ports:
+                            start_time = datetime.now(timezone('US/Pacific'))
                             try:
                                 neutron.delete_port(port['id'])
                             except:
@@ -151,11 +183,21 @@ def delete_network(tenant_name):
 
                         neutron.delete_subnet(subnet['id'])
                     neutron.delete_network(network['id'])
+                    end_time = datetime.now(timezone('US/Pacific'))
                     print "   Deleted " + network['name']
             print "\n"
+            print "-"*65
+            print ("    Network %s Deletion Time Summary :" % network_name)
+            print "-"*65
+            print "\n"
+            print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+            print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+
+            start_time = datetime.now(timezone('US/Pacific'))
             neutron.remove_gateway_router(router['id'])
             try:
                 neutron.delete_router(router['id'])
+                end_time = datetime.now(timezone('US/Pacific'))
             except:
                 pass
             print "   Deleted " + router['name']
@@ -163,6 +205,14 @@ def delete_network(tenant_name):
     msg = "<== Completed Network, Router Deletion from External Gateway "
     msg += "Successfully ==>"
     print msg
+    print "\n"
+    print "-"*65
+    print ("    Router Deletion Time Summary :")
+    print "-"*65
+    print "\n"
+    print('   - Test Started Time   :\t %s' % (start_time.strftime(fmt)))
+    print('   - Test Ended Time     :\t %s' % (end_time.strftime(fmt)))
+
     if FLOATING_IP_CREATION:
         release_all_floating_ips()
         print "\n"
