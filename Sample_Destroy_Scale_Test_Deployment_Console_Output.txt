@@ -1,11 +1,10 @@
 [onecloud@localhost ]$ python destroy_deploy.py 
 
-
 ======================================================================
     Configuration for this Scale Test
 ======================================================================
  Tenant will be created with prefix                         : tenant-test
- No of Tenants will be created                              : 2
+ No of Tenants will be created                              : 1
  Tenant base index range starts from                        : 101
  No of Users per Tenant                                     : 1
  No of Networks                                             : 2
@@ -29,6 +28,15 @@ Destroying Scale Test Deployment
 <== Completed VM Termination on Network ==>
 
 
+-----------------------------------------------------------------
+    Instance tenant-test-101-net-1-vm-1 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-02 05:45:08 PST-0800
+   - Test Ended Time     :	 2015-12-02 05:45:09 PST-0800
+
+
 ==================================================
    Terminating VM launched on tenant-test-101-net-2
 ==================================================
@@ -40,19 +48,44 @@ Destroying Scale Test Deployment
 <== Completed VM Termination on Network ==>
 
 
+-----------------------------------------------------------------
+    Instance tenant-test-101-net-2-vm-1 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-02 05:45:09 PST-0800
+   - Test Ended Time     :	 2015-12-02 05:45:11 PST-0800
+
+
 ==================================================
    Initiated Network Deletion 
 ==================================================
 
 
-   Deleted tenant-test-101-net-2
    Deleted tenant-test-101-net-1
+   Deleted tenant-test-101-net-2
 
 
+-----------------------------------------------------------------
+    Network tenant-test-101-net-2 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-02 05:45:16 PST-0800
+   - Test Ended Time     :	 2015-12-02 05:45:18 PST-0800
    Deleted tenant-test-101-router
 
 
 <== Completed Network, Router Deletion from External Gateway Successfully ==>
+
+
+-----------------------------------------------------------------
+    Router Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-02 05:45:18 PST-0800
+   - Test Ended Time     :	 2015-12-02 05:45:19 PST-0800
 
 
 <== Released all Floating IPs Successfully ==>
@@ -60,49 +93,25 @@ Destroying Scale Test Deployment
    - Deleted Tenant tenant-test-101 
 
 
-==================================================
-   Terminating VM launched on tenant-test-102-net-1
-==================================================
+-----------------------------------------------------------------
+    Tenant & User Deletion Time Summary :
+-----------------------------------------------------------------
 
 
-  * Instance terminated on network: tenant-test-102-net-1-vm-1
-
-
-<== Completed VM Termination on Network ==>
-
-
-==================================================
-   Terminating VM launched on tenant-test-102-net-2
-==================================================
-
-
-  * Instance terminated on network: tenant-test-102-net-2-vm-1
-
-
-<== Completed VM Termination on Network ==>
-
-
-==================================================
-   Initiated Network Deletion 
-==================================================
-
-
-   Deleted tenant-test-102-net-2
-   Deleted tenant-test-102-net-1
-
-
-   Deleted tenant-test-102-router
-
-
-<== Completed Network, Router Deletion from xternal Gateway Successfully ==>
-
-
-<== Released all Floating IPs Successfully ==>
-   - Deleted User tenant-test-102-user-1
-   - Deleted Tenant tenant-test-102 
+   - Test Started Time   :	 2015-12-02 05:45:20 PST-0800
+   - Test Ended Time     :	 2015-12-02 05:45:21 PST-0800
 ==================================================
 
 
 Cleaned Scale Test Deployment
 
+
+-----------------------------------------------------------------
+    Scale Test Deployment Consolidated Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-02 05:45:08 PST-0800
+   - Test Ended Time     :	 2015-12-02 05:45:21 PST-0800
+   - Elapsed Time for Cleaned Scale Test Deployment: 0 days, 0 hours, 0 minutes, 13 seconds
 

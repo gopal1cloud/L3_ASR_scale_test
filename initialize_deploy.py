@@ -232,7 +232,7 @@ def main():
         
         for i in range(1, NETWORK_COUNT + 1):
             network_index = str(i)
-            network_cidr = str(i) + "." + str(i) + "." + str(i) + ".0/22"
+            network_cidr = str(i) + "." + str(i) + "." + str(i) + ".0/24"
             test_data.append(create_network(tenant, router,
                              network_index, network_cidr))
 
@@ -347,10 +347,12 @@ if __name__ == '__main__':
     main_start_time = datetime.now(timezone('US/Pacific'))
     main()
     main_end_time = datetime.now(timezone('US/Pacific'))
+    total_time = (main_end_time - main_start_time)
     print "-"*65
     print ("    Scale Test Deployment Consolidated Time Summary :")
     print "-"*65
     print "\n"
     print('   - Test Started Time:\t %s' % (main_start_time.strftime(fmt)))
     print('   - Test Ended Time:\t %s' % (main_end_time.strftime(fmt)))
+    print('   - Elapsed Time for Scale Test Deployment: %d days, %d hours, %d minutes, %d seconds' % (total_time.days, (total_time.seconds/3600), (total_time.seconds % 3600 / 60), total_time.seconds))
     print "\n"

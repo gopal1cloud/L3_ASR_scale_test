@@ -57,10 +57,12 @@ if __name__ == '__main__':
     main_start_time = datetime.now(timezone('US/Pacific'))
     main()
     main_end_time = datetime.now(timezone('US/Pacific'))
+    total_time = (main_end_time - main_start_time)
     print "-"*65
     print ("    Scale Test Deployment Consolidated Time Summary :")
     print "-"*65
     print "\n"
     print('   - Test Started Time   :\t %s' % (main_start_time.strftime(fmt)))
     print('   - Test Ended Time     :\t %s' % (main_end_time.strftime(fmt)))
+    print('   - Elapsed Time for Cleaned Scale Test Deployment: %d days, %d hours, %d minutes, %d seconds' % (total_time.days, (total_time.seconds/3600), (total_time.seconds % 3600 / 60), total_time.seconds)) 
     print "\n"
