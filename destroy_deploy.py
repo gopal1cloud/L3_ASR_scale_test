@@ -64,5 +64,5 @@ if __name__ == '__main__':
     print "\n"
     print('   - Test Started Time   :\t %s' % (main_start_time.strftime(fmt)))
     print('   - Test Ended Time     :\t %s' % (main_end_time.strftime(fmt)))
-    print('   - Elapsed Time for Cleaned Scale Test Deployment: %d days, %d hours, %d minutes, %d seconds' % (total_time.days, (total_time.seconds/3600), (total_time.seconds % 3600 / 60), total_time.seconds)) 
+    print('   - Elapsed Time for Cleaned Scale Test Deployment: %d days, %d hours, %d minutes, %d seconds' % (total_time.days, (total_time.seconds/3600), (total_time.seconds % 3600 / 60), (total_time.seconds % 60)))
     print "\n"
