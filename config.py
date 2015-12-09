@@ -10,6 +10,9 @@ OS_USERNAME = 'admin'
 OS_TENANT_NAME = 'admin'
 OS_PASSWORD = 'admin123'
 OS_AUTH_URL = 'http://10.1.25.136:5000/v2.0/'
+
+# TENANT_CREATION = True 
+
 TENANT_COUNT = 2
 TENANT_NAME_PREFIX = 'tenant-test'
 TENANT_BASE_INDEX = 101
@@ -25,6 +28,10 @@ EXTERNAL_NETWORK = 'public'
 
 FLOATING_IP_CREATION = True
 FLOATING_IP_POOL = 'public'
+
+TENANT_CREATION = False
+TENANT_NAME = ['tenant-test-101', 'tenant-test-102', 'tenant-test-103', 'tenant-test-104','tenant-test-105']
+
 
 # Cisco ASR Settings
 
