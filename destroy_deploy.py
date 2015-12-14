@@ -7,6 +7,7 @@ Developer: gopal@onecloudinc.com
 
 import os
 from neutronclient.v2_0 import client
+from keystoneclient.v2_0 import client as ksclient
 from credentials import get_credentials
 from config import TENANT_BASE_INDEX, TENANT_COUNT, TENANT_NAME_PREFIX, \
     print_scale_test_config
@@ -17,6 +18,7 @@ from pytz import timezone
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
+keystone = ksclient.Client(**credentials)
 fmt = "%Y-%m-%d %H:%M:%S %Z%z"
 
 
@@ -35,9 +37,14 @@ def main():
     for i in range(1, TENANT_COUNT + 1):
         tenant_name = TENANT_NAME_PREFIX + '-' + str(index)
         index += 1
-        delete_network(tenant_name)
         start_time = datetime.now(timezone('US/Pacific'))
-        delete_tenant(tenant_name)
+        try:
+            tenant = keystone.tenants.find(name=tenant_name)
+            delete_network(tenant_name)
+            delete_tenant(tenant_name)
+        except Exception:
+            print("   - Tenant Not Found: %s" % tenant_name)
+            pass
         end_time = datetime.now(timezone('US/Pacific'))
         print "\n"
         print "-"*65

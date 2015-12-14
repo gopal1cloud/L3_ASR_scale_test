@@ -121,14 +121,9 @@ def delete_tenant(tenant_name):
             j += 1
             user_name = tenant_name + '-user-' + str(j)
             delete_user(user_name, tenant.id)
-    except Exception:
-        pass
-    try:
-        new_tenant = keystone.tenants.find(name=tenant_name)
-        new_tenant.delete()
+        tenant.delete()
         print('   - Deleted Tenant %s ' % tenant_name)
     except Exception:
-        print("   - Tenant Not Found: %s" % tenant_name)
         pass
     return True
 
