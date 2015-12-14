@@ -43,6 +43,7 @@ def main():
             delete_network(tenant_name)
             delete_tenant(tenant_name)
         except Exception:
+            print "\n"
             print("   - Tenant Not Found: %s" % tenant_name)
             pass
         end_time = datetime.now(timezone('US/Pacific'))
