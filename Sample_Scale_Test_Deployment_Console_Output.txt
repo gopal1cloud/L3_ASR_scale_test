@@ -290,10 +290,10 @@ Scale Test Deployment OpenStack Report
 +-----------------+-----------------------+--------------+---------+--------------------------+--------+
 |   Tenant Name   |      Network Name     | Network CIDR | Vlan ID |       Subnet Name        | Status |
 +-----------------+-----------------------+--------------+---------+--------------------------+--------+
-| tenant-test-101 | tenant-test-101-net-1 |  1.1.1.0/24  |   1002  | tenant-test-101-subnet-1 |  True  |
-| tenant-test-101 | tenant-test-101-net-2 |  2.2.2.0/24  |   1003  | tenant-test-101-subnet-2 |  True  |
-| tenant-test-102 | tenant-test-102-net-1 |  1.1.1.0/24  |   1004  | tenant-test-102-subnet-1 |  True  |
-| tenant-test-102 | tenant-test-102-net-2 |  2.2.2.0/24  |   1005  | tenant-test-102-subnet-2 |  True  |
+| tenant-test-101 | tenant-test-101-net-1 |  1.1.1.0/24  |   637   | tenant-test-101-subnet-1 |  True  |
+| tenant-test-101 | tenant-test-101-net-2 |  2.2.2.0/24  |   638   | tenant-test-101-subnet-2 |  True  |
+| tenant-test-102 | tenant-test-102-net-1 |  1.1.1.0/24  |   639   | tenant-test-102-subnet-1 |  True  |
+| tenant-test-102 | tenant-test-102-net-2 |  2.2.2.0/24  |   640   | tenant-test-102-subnet-2 |  True  |
 +-----------------+-----------------------+--------------+---------+--------------------------+--------+
 
 
