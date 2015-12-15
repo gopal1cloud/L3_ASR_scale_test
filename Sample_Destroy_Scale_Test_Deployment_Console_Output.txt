@@ -29,6 +29,15 @@ Destroying Scale Test Deployment
 <== Completed VM Termination on Network ==>
 
 
+-----------------------------------------------------------------
+    Instance tenant-test-101-net-1-vm-1 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:09 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:10 PST-0800
+
+
 ==================================================
    Terminating VM launched on tenant-test-101-net-2
 ==================================================
@@ -40,24 +49,58 @@ Destroying Scale Test Deployment
 <== Completed VM Termination on Network ==>
 
 
+-----------------------------------------------------------------
+    Instance tenant-test-101-net-2-vm-1 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:10 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:12 PST-0800
+
+
 ==================================================
    Initiated Network Deletion 
 ==================================================
 
 
-   Deleted tenant-test-101-net-2
    Deleted tenant-test-101-net-1
+   Deleted tenant-test-101-net-2
 
 
+-----------------------------------------------------------------
+    Network tenant-test-101-net-2 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:15 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:16 PST-0800
    Deleted tenant-test-101-router
 
 
 <== Completed Network, Router Deletion from External Gateway Successfully ==>
 
 
+-----------------------------------------------------------------
+    Router Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:16 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:17 PST-0800
+
+
 <== Released all Floating IPs Successfully ==>
    - Deleted User tenant-test-101-user-1
    - Deleted Tenant tenant-test-101 
+
+
+-----------------------------------------------------------------
+    Tenant & User Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:08 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:19 PST-0800
 
 
 ==================================================
@@ -71,6 +114,15 @@ Destroying Scale Test Deployment
 <== Completed VM Termination on Network ==>
 
 
+-----------------------------------------------------------------
+    Instance tenant-test-102-net-1-vm-1 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:19 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:21 PST-0800
+
+
 ==================================================
    Terminating VM launched on tenant-test-102-net-2
 ==================================================
@@ -82,6 +134,15 @@ Destroying Scale Test Deployment
 <== Completed VM Termination on Network ==>
 
 
+-----------------------------------------------------------------
+    Instance tenant-test-102-net-2-vm-1 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:21 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:23 PST-0800
+
+
 ==================================================
    Initiated Network Deletion 
 ==================================================
@@ -91,18 +152,52 @@ Destroying Scale Test Deployment
    Deleted tenant-test-102-net-1
 
 
+-----------------------------------------------------------------
+    Network tenant-test-102-net-2 Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:26 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:27 PST-0800
    Deleted tenant-test-102-router
 
 
-<== Completed Network, Router Deletion from xternal Gateway Successfully ==>
+<== Completed Network, Router Deletion from External Gateway Successfully ==>
+
+
+-----------------------------------------------------------------
+    Router Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:27 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:27 PST-0800
 
 
 <== Released all Floating IPs Successfully ==>
    - Deleted User tenant-test-102-user-1
    - Deleted Tenant tenant-test-102 
+
+
+-----------------------------------------------------------------
+    Tenant & User Deletion Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:19 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:28 PST-0800
 ==================================================
 
 
 Cleaned Scale Test Deployment
 
+
+-----------------------------------------------------------------
+    Scale Test Deployment Consolidated Time Summary :
+-----------------------------------------------------------------
+
+
+   - Test Started Time   :	 2015-12-15 00:34:08 PST-0800
+   - Test Ended Time     :	 2015-12-15 00:34:28 PST-0800
+   - Elapsed Time for Cleaned Scale Test Deployment: 0 days, 0 hours, 0 minutes, 19 seconds
 

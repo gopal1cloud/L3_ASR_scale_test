@@ -35,11 +35,11 @@ def create_tenant(tenant_name):
                                                  description="Scale tenant \
                                                      created",
                                                  enabled=True)
+            print('   - Tenant %s created' % tenant_name)
         except Exception:
             new_tenant = keystone.tenants.find(name=tenant_name)
         tenant_id = new_tenant.id
         tenant_status = True
-        print('   - Tenant %s created' % tenant_name)
         user_data = []
         for j in range(USER_COUNT):
             j += 1
@@ -61,6 +61,26 @@ def create_tenant(tenant_name):
     return tenant_data
 
 
+def discover_tenant(tenant_name):
+    """
+    This method is used to discover tenant and discover number of users per tenant
+    """
+    try:
+        new_tenant = keystone.tenants.find(name=tenant_name)
+        tenant_id = new_tenant.id
+        tenant_status = True
+        print "\n"
+        print('   - Tenant %s Discovered' % tenant_name)
+        print('   - Tenant_ID %s Discovered' % tenant_id)
+    except Exception:
+        pass
+        
+    tenant_data = {'tenant_name': tenant_name,
+                   'tenant_id': tenant_id,
+                   'status': tenant_status}
+    return tenant_data
+
+
 def create_user(user_name, tenant_id):
     """
     This method is to create users per Tenant
@@ -70,9 +90,9 @@ def create_user(user_name, tenant_id):
         new_user = keystone.users.create(name=user_name,
                                          password=USER_PASSWORD,
                                          tenant_id=tenant_id)
+        print('   - Created User %s' % user_name)
     except Exception:
         new_user = keystone.users.find(name=user_name)
-    print('   - Created User %s' % user_name)
     member_role = keystone.roles.find(name='_member_')
     try:
         keystone.roles.add_user_role(new_user, member_role, tenant_id)
@@ -101,14 +121,9 @@ def delete_tenant(tenant_name):
             j += 1
             user_name = tenant_name + '-user-' + str(j)
             delete_user(user_name, tenant.id)
-    except Exception:
-        pass
-    try:
-        new_tenant = keystone.tenants.find(name=tenant_name)
-        new_tenant.delete()
+        tenant.delete()
         print('   - Deleted Tenant %s ' % tenant_name)
     except Exception:
-        print("   - Tenant Not Found: %s" % tenant_name)
         pass
     return True
 

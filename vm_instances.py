@@ -54,6 +54,26 @@ def launch_vm_on_network(tenant_name, vm_name, network_id):
     return ins_data
 
 
+def discover_vm_on_network(tenant_name, vm_name, network_id):
+    """
+    This method is used to discover instances per tenant
+    """
+    try:
+        tenant_credentials = get_tenant_nova_credentials(tenant_name)
+        nova = nvclient.Client(**tenant_credentials)
+        instance = nova.servers.find(name=vm_name)
+        instance_id = nova.servers.get(instance.id)
+        print('   - Instance %s Discovered' % vm_name)
+        print('   - Instance ID %s Discovered' % instance_id)
+        status = True
+    except Exception:
+        print('   - Instance %s Not Found' % vm_name)
+        status = False
+
+    ins_data = {'instance_name': vm_name, 'status': status}
+    return ins_data
+
+
 def terminate_vm_on_network(tenant_name, vm_name, network_name):
     """
     This method is to terminate VM on the given network & VM Name.
