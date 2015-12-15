@@ -8,8 +8,8 @@ Developer: gopal@onecloudinc.com
  
 OS_USERNAME = 'admin'
 OS_TENANT_NAME = 'admin'
-OS_PASSWORD = 'admin123'
-OS_AUTH_URL = 'http://10.1.25.136:5000/v2.0/'
+OS_PASSWORD = 'admin'
+OS_AUTH_URL = 'http://192.168.1.14:5000/v2.0/'
 
 # TENANT_CREATION = True 
 
