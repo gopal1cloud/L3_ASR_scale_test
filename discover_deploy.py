@@ -333,7 +333,7 @@ def main():
         router_dict['iproute_data'] = iproute_data
         router_dict['interface_data'] = interface_data
         router_dict['nat_data'] = nat_data
-    router_data.append(router_dict)
+        router_data.append(router_dict)
 
     print "\n"
     print "=" * 50
